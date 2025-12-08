@@ -2473,5 +2473,157 @@
       "Step 5: Verify all required scripts present"
     ],
     "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Email verification link expires after use",
+    "steps": [
+      "Step 1: Register new account",
+      "Step 2: Get verification link",
+      "Step 3: Click verification link",
+      "Step 4: Verify account activated",
+      "Step 5: Try using same link again",
+      "Step 6: Verify link is invalid/expired"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can export data to CSV",
+    "steps": [
+      "Step 1: Login as admin",
+      "Step 2: Navigate to contacts or projects",
+      "Step 3: Click export to CSV button",
+      "Step 4: Verify CSV file downloads",
+      "Step 5: Open CSV and verify data is correct",
+      "Step 6: Verify all columns present"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client receives email when project status changes",
+    "steps": [
+      "Step 1: Admin changes project status",
+      "Step 2: Verify email sent to client",
+      "Step 3: Check email content",
+      "Step 4: Verify email contains project details",
+      "Step 5: Verify email link navigates to project"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can create recurring invoices",
+    "steps": [
+      "Step 1: Login as admin",
+      "Step 2: Navigate to invoices",
+      "Step 3: Create recurring invoice",
+      "Step 4: Set recurrence pattern (monthly/quarterly)",
+      "Step 5: Save recurring invoice",
+      "Step 6: Verify invoice auto-generates on schedule"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog RSS feed is generated",
+    "steps": [
+      "Step 1: Navigate to /rss or /feed.xml",
+      "Step 2: Verify RSS XML displays",
+      "Step 3: Verify all published posts included",
+      "Step 4: Verify RSS format is valid",
+      "Step 5: Test RSS in feed reader"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Portfolio items can be sorted by date or category",
+    "steps": [
+      "Step 1: Navigate to /portofoliu",
+      "Step 2: Click sort by date",
+      "Step 3: Verify items sorted chronologically",
+      "Step 4: Click sort by category",
+      "Step 5: Verify items grouped by category"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can save draft contact messages",
+    "steps": [
+      "Step 1: Navigate to contact form",
+      "Step 2: Fill in some fields",
+      "Step 3: Click 'Save draft' button",
+      "Step 4: Navigate away from page",
+      "Step 5: Return to contact form",
+      "Step 6: Verify draft data is restored"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin receives notification of new contact submissions",
+    "steps": [
+      "Step 1: User submits contact form",
+      "Step 2: Verify admin receives email notification",
+      "Step 3: Verify notification includes submitter details",
+      "Step 4: Verify notification includes message content",
+      "Step 5: Verify notification link to admin panel"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Skeleton loaders display while content loads",
+    "steps": [
+      "Step 1: Navigate to blog page",
+      "Step 2: Observe loading state",
+      "Step 3: Verify skeleton loader displays",
+      "Step 4: Verify skeleton matches final content layout",
+      "Step 5: Verify smooth transition from skeleton to content"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Toasts/notifications are properly styled",
+    "steps": [
+      "Step 1: Trigger success notification",
+      "Step 2: Verify toast appears in corner",
+      "Step 3: Verify success styling (green)",
+      "Step 4: Trigger error notification",
+      "Step 5: Verify error styling (red)",
+      "Step 6: Verify auto-dismiss after timeout",
+      "Step 7: Verify manual dismiss button works"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Microinteractions enhance user experience",
+    "steps": [
+      "Step 1: Navigate through site",
+      "Step 2: Observe button hover effects",
+      "Step 3: Verify smooth transitions on state changes",
+      "Step 4: Check form input focus animations",
+      "Step 5: Verify loading button states",
+      "Step 6: Check card hover lift effects"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Global search works across all content types",
+    "steps": [
+      "Step 1: Enter search query in global search",
+      "Step 2: Verify results from blog posts",
+      "Step 3: Verify results from services",
+      "Step 4: Verify results from portfolio",
+      "Step 5: Verify results are ranked by relevance",
+      "Step 6: Verify click navigates to result"
+    ],
+    "passes": false
   }
 ]
