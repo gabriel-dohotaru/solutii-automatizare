@@ -1,0 +1,606 @@
+<project_specification>
+  <project_name>Soluții Automatizare - Software Automation Services Platform</project_name>
+  <domain>solutiiautomatizare.ro</domain>
+
+  <overview>
+    Build a professional website and client portal for a software automation services company.
+    The company specializes in:
+    - E-commerce modules development (PrestaShop, WooCommerce, Magento, OpenCart)
+    - Software automation (scripts, API integrations, process automation)
+    - Bug fixing and maintenance services
+    - Custom web development (websites, web applications, SaaS)
+
+    The platform should showcase services, display pricing packages, allow quote requests,
+    provide a client portal for project tracking, and feature a blog for SEO and expertise
+    demonstration. Design should be modern, professional, and tech-oriented.
+  </overview>
+
+  <technology_stack>
+    <frontend>
+      <framework>React 18 with Vite</framework>
+      <styling>Tailwind CSS (via CDN)</styling>
+      <state_management>React Context + hooks</state_management>
+      <routing>React Router v6</routing>
+      <animations>Framer Motion for smooth transitions</animations>
+      <icons>Lucide React icons</icons>
+      <forms>React Hook Form with validation</forms>
+      <port>5173</port>
+    </frontend>
+    <backend>
+      <runtime>Node.js 20+ with Express</runtime>
+      <database>SQLite with better-sqlite3</database>
+      <auth>JWT tokens with refresh mechanism</auth>
+      <email>Nodemailer for transactional emails</email>
+      <port>3001</port>
+    </backend>
+  </technology_stack>
+
+  <design_system>
+    <colors>
+      <primary>#6366F1</primary>           <!-- Indigo - tech, innovation -->
+      <primary_dark>#4F46E5</primary_dark>
+      <secondary>#10B981</secondary>        <!-- Emerald - success, growth -->
+      <accent>#F59E0B</accent>              <!-- Amber - attention, CTAs -->
+      <background_light>#F8FAFC</background_light>
+      <background_dark>#0F172A</background_dark>
+      <text_primary>#1E293B</text_primary>
+      <text_secondary>#64748B</text_secondary>
+    </colors>
+    <typography>
+      <headings>Inter font, bold weights</headings>
+      <body>Inter font, regular weight</body>
+      <code>JetBrains Mono for code snippets</code>
+    </typography>
+  </design_system>
+
+  <!-- ==================== PAGES STRUCTURE ==================== -->
+
+  <pages>
+    <!-- PUBLIC PAGES -->
+    <page name="Homepage" url="/">
+      <sections>
+        - Hero section: "Automatizăm Succesul Afacerii Tale" + animated code background
+        - Services overview (4 cards with icons)
+        - Stats counter (proiecte finalizate, clienți mulțumiți, ani experiență)
+        - Technologies we work with (logos: PrestaShop, WooCommerce, Magento, React, Node.js, etc.)
+        - Featured projects carousel
+        - Testimonials slider
+        - CTA banner: "Solicită o ofertă gratuită"
+        - Footer with contact info
+      </sections>
+    </page>
+
+    <page name="Servicii" url="/servicii">
+      <sections>
+        - Services hero
+        - Service categories:
+          1. Module E-commerce
+             - Module PrestaShop (personalizare, funcționalități noi)
+             - Module WooCommerce (plugin-uri custom)
+             - Module Magento
+             - Module OpenCart
+             - Integrări plăți, curierat, ERP
+          2. Automatizări Software
+             - API integrations
+             - Data sync & migration
+             - Process automation scripts
+             - Web scraping solutions
+             - Scheduled tasks & cron jobs
+          3. Bug Fixing & Mentenanță
+             - Debugging website-uri
+             - Performance optimization
+             - Security fixes
+             - Actualizări și upgrade-uri
+             - SLA support contracts
+          4. Dezvoltare Web Custom
+             - Website-uri prezentare
+             - Aplicații web
+             - Dashboard-uri admin
+             - SaaS development
+             - Landing pages
+        - Process timeline (cum lucrăm)
+        - FAQ accordion
+      </sections>
+    </page>
+
+    <page name="Pachete & Prețuri" url="/pachete">
+      <sections>
+        - Pricing hero: "Soluții pentru orice buget"
+        - 3 pricing tiers:
+          * Starter (Module simple)
+            - 1 modul custom
+            - 2 revizii
+            - Suport 30 zile
+            - De la 500€
+          * Professional (Proiecte medii)
+            - Până la 5 module/integrări
+            - Revizii nelimitate
+            - Suport 90 zile
+            - Prioritate ridicată
+            - De la 1500€
+          * Enterprise (Proiecte complexe)
+            - Proiecte custom complete
+            - Echipă dedicată
+            - SLA garantat
+            - Suport pe termen lung
+            - Preț la cerere
+        - Add-ons (servicii extra): mentenanță lunară, support premium
+        - Quote request form: "Proiectul tău nu se încadrează? Solicită ofertă personalizată"
+      </sections>
+    </page>
+
+    <page name="Portofoliu" url="/portofoliu">
+      <sections>
+        - Portfolio hero
+        - Filter by category:
+          * Module PrestaShop
+          * Module WooCommerce
+          * Automatizări
+          * Aplicații Web
+          * Bug Fixing
+        - Project cards grid:
+          * Screenshot/logo
+          * Nume proiect
+          * Categorie/tehnologii
+          * Scurtă descriere
+          * Buton "Vezi detalii"
+        - Project detail page/modal:
+          * Provocarea clientului
+          * Soluția implementată
+          * Rezultate obținute
+          * Tehnologii folosite
+          * Testimonial client (dacă există)
+      </sections>
+    </page>
+
+    <page name="Blog" url="/blog">
+      <sections>
+        - Blog hero with search
+        - Categories: Tutoriale, Noutăți, Case Studies, Tips & Tricks
+        - Featured article large card
+        - Article grid
+        - Sidebar: categories, popular posts, newsletter signup
+        - Pagination
+      </sections>
+    </page>
+
+    <page name="Blog Article" url="/blog/:slug">
+      <sections>
+        - Article header
+        - Featured image
+        - Content with code snippets syntax highlighting
+        - Table of contents (sticky)
+        - Related articles
+        - Share buttons
+        - CTA: "Ai nevoie de ajutor cu un proiect similar?"
+      </sections>
+    </page>
+
+    <page name="Despre Noi" url="/despre-noi">
+      <sections>
+        - Company story: experiență din 2015
+        - Mission: Automatizăm procesele pentru a economisi timp și bani
+        - Valori: Calitate, Comunicare, Termene respectate
+        - Echipa (opțional - poze sau avatare generice)
+        - Certificări/parteneri
+        - Locație: România
+      </sections>
+    </page>
+
+    <page name="Contact" url="/contact">
+      <sections>
+        - Contact hero
+        - Contact form:
+          * Nume complet
+          * Email
+          * Telefon
+          * Tip serviciu (dropdown: Module, Automatizări, Bug Fixing, Web Dev, Altele)
+          * Buget estimat (dropdown: <500€, 500-1500€, 1500-5000€, >5000€)
+          * Descriere proiect (textarea)
+          * Atașare fișier (opțional)
+        - Contact info cards
+        - FAQ despre proces
+      </sections>
+    </page>
+
+    <page name="Solicită Ofertă" url="/solicita-oferta">
+      <sections>
+        - Multi-step quote form:
+          Step 1: Tip proiect
+          Step 2: Detalii tehnice
+          Step 3: Termen și buget
+          Step 4: Informații contact
+        - Progress indicator
+        - Summary before submit
+      </sections>
+    </page>
+
+    <page name="Termeni și Condiții" url="/termeni">
+      <content>Legal terms for services</content>
+    </page>
+
+    <page name="Politica de Confidențialitate" url="/confidentialitate">
+      <content>GDPR compliant privacy policy</content>
+    </page>
+
+    <!-- CLIENT PORTAL -->
+    <page name="Login" url="/login">
+      - Email/password form
+      - Remember me
+      - Forgot password link
+    </page>
+
+    <page name="Register" url="/register">
+      - Registration form (pentru clienți noi după aprobare)
+      - Email verification
+    </page>
+
+    <page name="Dashboard Client" url="/client">
+      <sections>
+        - Welcome message
+        - Active projects overview
+        - Recent updates/notifications
+        - Quick actions
+      </sections>
+    </page>
+
+    <page name="Proiectele Mele" url="/client/proiecte">
+      <sections>
+        - Projects list with status badges
+        - Project detail:
+          * Timeline cu milestones
+          * Progress bar
+          * Updates/comments
+          * Files/deliverables
+          * Support ticket button
+      </sections>
+    </page>
+
+    <page name="Suport" url="/client/suport">
+      <sections>
+        - Open tickets list
+        - Create new ticket form
+        - Ticket detail with message thread
+        - File attachments
+      </sections>
+    </page>
+
+    <page name="Facturi" url="/client/facturi">
+      <sections>
+        - Invoices list
+        - Download PDF
+        - Payment status
+      </sections>
+    </page>
+
+    <page name="Setări Cont" url="/client/setari">
+      <sections>
+        - Profile info
+        - Change password
+        - Notification preferences
+      </sections>
+    </page>
+  </pages>
+
+  <!-- ==================== DATABASE SCHEMA ==================== -->
+
+  <database_schema>
+    <tables>
+      <users>
+        - id INTEGER PRIMARY KEY
+        - email TEXT UNIQUE NOT NULL
+        - password_hash TEXT NOT NULL
+        - first_name TEXT
+        - last_name TEXT
+        - company_name TEXT
+        - phone TEXT
+        - role TEXT DEFAULT 'client' (client/admin)
+        - email_verified INTEGER DEFAULT 0
+        - created_at DATETIME
+        - updated_at DATETIME
+      </users>
+
+      <services>
+        - id INTEGER PRIMARY KEY
+        - name TEXT NOT NULL
+        - slug TEXT UNIQUE
+        - category TEXT (ecommerce/automation/bugfix/webdev)
+        - short_description TEXT
+        - full_description TEXT
+        - icon TEXT
+        - features JSON
+        - is_featured INTEGER DEFAULT 0
+        - order_index INTEGER
+        - is_active INTEGER DEFAULT 1
+      </services>
+
+      <packages>
+        - id INTEGER PRIMARY KEY
+        - name TEXT NOT NULL (Starter/Professional/Enterprise)
+        - slug TEXT UNIQUE
+        - description TEXT
+        - price_from DECIMAL(10,2)
+        - currency TEXT DEFAULT 'EUR'
+        - features JSON
+        - is_popular INTEGER DEFAULT 0
+        - order_index INTEGER
+        - is_active INTEGER DEFAULT 1
+      </packages>
+
+      <projects>
+        - id INTEGER PRIMARY KEY
+        - client_id INTEGER REFERENCES users(id)
+        - name TEXT NOT NULL
+        - description TEXT
+        - service_type TEXT
+        - status TEXT (inquiry/approved/in_progress/review/completed/cancelled)
+        - progress INTEGER DEFAULT 0
+        - estimated_hours INTEGER
+        - price DECIMAL(10,2)
+        - currency TEXT DEFAULT 'EUR'
+        - start_date DATE
+        - deadline DATE
+        - completed_date DATE
+        - created_at DATETIME
+        - updated_at DATETIME
+      </projects>
+
+      <project_milestones>
+        - id INTEGER PRIMARY KEY
+        - project_id INTEGER REFERENCES projects(id)
+        - title TEXT
+        - description TEXT
+        - status TEXT (pending/in_progress/completed)
+        - due_date DATE
+        - completed_date DATE
+        - order_index INTEGER
+      </project_milestones>
+
+      <project_updates>
+        - id INTEGER PRIMARY KEY
+        - project_id INTEGER REFERENCES projects(id)
+        - user_id INTEGER REFERENCES users(id)
+        - title TEXT
+        - content TEXT
+        - is_internal INTEGER DEFAULT 0
+        - created_at DATETIME
+      </project_updates>
+
+      <project_files>
+        - id INTEGER PRIMARY KEY
+        - project_id INTEGER REFERENCES projects(id)
+        - uploaded_by INTEGER REFERENCES users(id)
+        - filename TEXT
+        - original_name TEXT
+        - file_type TEXT
+        - file_size INTEGER
+        - description TEXT
+        - is_deliverable INTEGER DEFAULT 0
+        - created_at DATETIME
+      </project_files>
+
+      <portfolio_items>
+        - id INTEGER PRIMARY KEY
+        - title TEXT NOT NULL
+        - slug TEXT UNIQUE
+        - category TEXT
+        - client_name TEXT
+        - short_description TEXT
+        - challenge TEXT
+        - solution TEXT
+        - results TEXT
+        - technologies JSON
+        - images JSON
+        - testimonial TEXT
+        - is_featured INTEGER DEFAULT 0
+        - is_published INTEGER DEFAULT 1
+        - created_at DATETIME
+      </portfolio_items>
+
+      <blog_posts>
+        - id INTEGER PRIMARY KEY
+        - title TEXT NOT NULL
+        - slug TEXT UNIQUE
+        - excerpt TEXT
+        - content TEXT
+        - featured_image TEXT
+        - category TEXT (tutorials/news/case-studies/tips)
+        - author_id INTEGER REFERENCES users(id)
+        - status TEXT (draft/published)
+        - reading_time INTEGER
+        - views INTEGER DEFAULT 0
+        - published_at DATETIME
+        - created_at DATETIME
+        - updated_at DATETIME
+      </blog_posts>
+
+      <support_tickets>
+        - id INTEGER PRIMARY KEY
+        - user_id INTEGER REFERENCES users(id)
+        - project_id INTEGER REFERENCES projects(id)
+        - subject TEXT
+        - status TEXT (open/in_progress/waiting/resolved/closed)
+        - priority TEXT (low/medium/high/urgent)
+        - created_at DATETIME
+        - updated_at DATETIME
+        - resolved_at DATETIME
+      </support_tickets>
+
+      <ticket_messages>
+        - id INTEGER PRIMARY KEY
+        - ticket_id INTEGER REFERENCES support_tickets(id)
+        - user_id INTEGER REFERENCES users(id)
+        - message TEXT
+        - attachments JSON
+        - is_internal INTEGER DEFAULT 0
+        - created_at DATETIME
+      </ticket_messages>
+
+      <contact_submissions>
+        - id INTEGER PRIMARY KEY
+        - name TEXT
+        - email TEXT
+        - phone TEXT
+        - company TEXT
+        - service_type TEXT
+        - budget_range TEXT
+        - message TEXT
+        - attachment_path TEXT
+        - status TEXT (new/contacted/converted/closed)
+        - notes TEXT
+        - created_at DATETIME
+        - updated_at DATETIME
+      </contact_submissions>
+
+      <quote_requests>
+        - id INTEGER PRIMARY KEY
+        - name TEXT
+        - email TEXT
+        - phone TEXT
+        - company TEXT
+        - project_type TEXT
+        - platform TEXT (prestashop/woocommerce/magento/other)
+        - description TEXT
+        - timeline TEXT
+        - budget_range TEXT
+        - attachments JSON
+        - status TEXT (new/reviewing/quoted/accepted/rejected)
+        - quoted_price DECIMAL(10,2)
+        - notes TEXT
+        - created_at DATETIME
+        - updated_at DATETIME
+      </quote_requests>
+
+      <invoices>
+        - id INTEGER PRIMARY KEY
+        - project_id INTEGER REFERENCES projects(id)
+        - client_id INTEGER REFERENCES users(id)
+        - invoice_number TEXT UNIQUE
+        - amount DECIMAL(10,2)
+        - currency TEXT DEFAULT 'EUR'
+        - status TEXT (draft/sent/paid/overdue/cancelled)
+        - due_date DATE
+        - paid_date DATE
+        - pdf_path TEXT
+        - created_at DATETIME
+      </invoices>
+
+      <newsletter_subscribers>
+        - id INTEGER PRIMARY KEY
+        - email TEXT UNIQUE
+        - is_active INTEGER DEFAULT 1
+        - subscribed_at DATETIME
+      </newsletter_subscribers>
+
+      <sessions>
+        - id INTEGER PRIMARY KEY
+        - user_id INTEGER REFERENCES users(id)
+        - token TEXT UNIQUE
+        - expires_at DATETIME
+        - created_at DATETIME
+      </sessions>
+    </tables>
+  </database_schema>
+
+  <!-- ==================== API ENDPOINTS ==================== -->
+
+  <api_endpoints>
+    <public>
+      - GET /api/services (list all services)
+      - GET /api/services/:slug (service detail)
+      - GET /api/packages (pricing packages)
+      - GET /api/portfolio (portfolio items)
+      - GET /api/portfolio/:slug (portfolio detail)
+      - GET /api/blog (blog posts)
+      - GET /api/blog/:slug (blog post)
+      - GET /api/blog/categories (categories list)
+      - POST /api/contact (contact form submission)
+      - POST /api/quote-request (quote form submission)
+      - POST /api/newsletter/subscribe
+    </public>
+
+    <auth>
+      - POST /api/auth/login
+      - POST /api/auth/logout
+      - POST /api/auth/register
+      - POST /api/auth/forgot-password
+      - POST /api/auth/reset-password
+      - GET /api/auth/me
+      - PUT /api/auth/profile
+      - PUT /api/auth/password
+    </auth>
+
+    <client>
+      - GET /api/client/dashboard (summary stats)
+      - GET /api/client/projects
+      - GET /api/client/projects/:id
+      - GET /api/client/projects/:id/updates
+      - GET /api/client/projects/:id/files
+      - GET /api/client/tickets
+      - POST /api/client/tickets
+      - GET /api/client/tickets/:id
+      - POST /api/client/tickets/:id/messages
+      - GET /api/client/invoices
+      - GET /api/client/invoices/:id/download
+    </client>
+
+    <admin>
+      - GET /api/admin/dashboard (KPIs)
+      - CRUD /api/admin/services
+      - CRUD /api/admin/packages
+      - CRUD /api/admin/portfolio
+      - CRUD /api/admin/blog
+      - GET /api/admin/contacts
+      - PUT /api/admin/contacts/:id/status
+      - GET /api/admin/quotes
+      - PUT /api/admin/quotes/:id
+      - CRUD /api/admin/projects
+      - POST /api/admin/projects/:id/updates
+      - POST /api/admin/projects/:id/files
+      - GET /api/admin/users
+      - PUT /api/admin/tickets/:id/status
+      - CRUD /api/admin/invoices
+    </admin>
+  </api_endpoints>
+
+  <features>
+    <authentication>
+      - JWT auth with refresh tokens
+      - Email verification
+      - Password reset
+      - Role-based access (client/admin)
+    </authentication>
+
+    <client_portal>
+      - Project timeline view
+      - Real-time updates
+      - File sharing
+      - Support tickets
+      - Invoice downloads
+    </client_portal>
+
+    <admin_panel>
+      - Dashboard with KPIs
+      - Project management
+      - Content management (portfolio, blog)
+      - Lead management (contacts, quotes)
+      - Invoice generation
+    </admin_panel>
+
+    <seo>
+      - Meta tags per page
+      - Blog for content marketing
+      - Clean URLs
+      - Structured data
+    </seo>
+  </features>
+
+  <success_criteria>
+    - All pages render correctly with Romanian content
+    - Contact and quote forms work end-to-end
+    - Client portal fully functional
+    - Admin can manage all content
+    - Mobile responsive
+    - Professional appearance
+  </success_criteria>
+</project_specification>
