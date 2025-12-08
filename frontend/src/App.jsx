@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Pages will be created progressively
 import HomePage from './pages/HomePage';
-// import ServicesPage from './pages/ServicesPage';
+import ServicesPage from './pages/ServicesPage';
 // import PackagesPage from './pages/PackagesPage';
 // import PortfolioPage from './pages/PortfolioPage';
 // import BlogPage from './pages/BlogPage';
@@ -20,6 +20,7 @@ function App() {
       <div className="min-h-screen bg-slate-50">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/servicii" element={<ServicesPage />} />
           {/* Additional routes will be added as pages are created */}
           <Route path="*" element={<NotFound />} />
         </Routes>

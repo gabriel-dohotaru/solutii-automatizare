@@ -180,6 +180,46 @@ class SolutiiAutomatizare {
         </div>
       </section>
 
+      {/* Technologies Section */}
+      <section className="py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">
+              Tehnologii cu Care Lucrăm
+            </h2>
+            <p className="text-xl text-slate-600">
+              Expertiza noastră acoperă cele mai populare platforme și tehnologii
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-bold text-primary mb-2">PS</div>
+              <div className="text-sm text-slate-600">PrestaShop</div>
+            </div>
+            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-bold text-purple-600 mb-2">WC</div>
+              <div className="text-sm text-slate-600">WooCommerce</div>
+            </div>
+            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-bold text-orange-500 mb-2">M</div>
+              <div className="text-sm text-slate-600">Magento</div>
+            </div>
+            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-bold text-blue-500 mb-2">OC</div>
+              <div className="text-sm text-slate-600">OpenCart</div>
+            </div>
+            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-bold text-cyan-500 mb-2">⚛</div>
+              <div className="text-sm text-slate-600">React</div>
+            </div>
+            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl font-bold text-green-600 mb-2">N</div>
+              <div className="text-sm text-slate-600">Node.js</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section */}
       <section className="py-20 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -195,6 +235,142 @@ class SolutiiAutomatizare {
             <div>
               <div className="text-5xl font-bold text-primary mb-2">9+</div>
               <div className="text-xl text-slate-300">Ani Experiență</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects Carousel */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">
+              Proiecte Recente
+            </h2>
+            <p className="text-xl text-slate-600">
+              Descoperă câteva dintre cele mai recente proiecte realizate
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="h-48 bg-gradient-to-br from-primary to-primary-dark"></div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                  Modul PrestaShop Custom
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  Integrare avansată cu sistem ERP pentru sincronizare automată produse și stocuri
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">PrestaShop</span>
+                  <span className="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">API</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="h-48 bg-gradient-to-br from-secondary to-emerald-600"></div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                  Automatizare Web Scraping
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  Script de monitorizare prețuri concurență cu notificări automate
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm">Python</span>
+                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">Automation</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="h-48 bg-gradient-to-br from-accent to-orange-600"></div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                  Dashboard Admin React
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  Platformă de management comenzi cu analytics în timp real
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">React</span>
+                  <span className="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">Node.js</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="text-center mt-12">
+            <a
+              href="/portofoliu"
+              className="inline-block px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors"
+            >
+              Vezi Toate Proiectele
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">
+              Ce Spun Clienții Noștri
+            </h2>
+            <p className="text-xl text-slate-600">
+              Feedback real de la clienți mulțumiți
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-lg">
+                  AM
+                </div>
+                <div className="ml-4">
+                  <div className="font-semibold text-slate-900">Andrei Marin</div>
+                  <div className="text-sm text-slate-600">CEO, ShopRo</div>
+                </div>
+              </div>
+              <p className="text-slate-600 italic">
+                "Modulul PrestaShop dezvoltat de echipa lor a îmbunătățit semnificativ procesul nostru de vânzare. Profesionalism și promptitudine!"
+              </p>
+              <div className="mt-4 flex text-accent">
+                <span>★★★★★</span>
+              </div>
+            </div>
+            <div className="bg-white p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary font-bold text-lg">
+                  MP
+                </div>
+                <div className="ml-4">
+                  <div className="font-semibold text-slate-900">Maria Popescu</div>
+                  <div className="text-sm text-slate-600">Manager, TechStore</div>
+                </div>
+              </div>
+              <p className="text-slate-600 italic">
+                "Automatizarea proceselor noastre a redus timpul de procesare cu 70%. Investiție excelentă!"
+              </p>
+              <div className="mt-4 flex text-accent">
+                <span>★★★★★</span>
+              </div>
+            </div>
+            <div className="bg-white p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent font-bold text-lg">
+                  CI
+                </div>
+                <div className="ml-4">
+                  <div className="font-semibold text-slate-900">Cristian Ionescu</div>
+                  <div className="text-sm text-slate-600">Director, OnlineMarket</div>
+                </div>
+              </div>
+              <p className="text-slate-600 italic">
+                "Echipă profesionistă, soluții creative și suport continuu. Recomand cu încredere!"
+              </p>
+              <div className="mt-4 flex text-accent">
+                <span>★★★★★</span>
+              </div>
             </div>
           </div>
         </div>

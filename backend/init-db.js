@@ -530,7 +530,7 @@ Utilizarea unui CDN pentru imagini și fișiere CSS/JS reduce timpul de încărc
   'published',
   8,
   142,
-  datetime('now')
+  new Date().toISOString()
 );
 
 console.log('✓ Sample portfolio and blog content created');
