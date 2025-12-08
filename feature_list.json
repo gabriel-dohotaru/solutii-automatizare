@@ -1,0 +1,2477 @@
+[
+  {
+    "category": "functional",
+    "description": "Homepage loads successfully with all sections visible",
+    "steps": [
+      "Step 1: Navigate to homepage at /",
+      "Step 2: Verify hero section displays with animated code background",
+      "Step 3: Verify all 4 service cards are visible",
+      "Step 4: Verify stats counter section exists",
+      "Step 5: Verify technologies logos section is present",
+      "Step 6: Verify featured projects carousel is visible",
+      "Step 7: Verify testimonials slider is present",
+      "Step 8: Verify CTA banner is visible",
+      "Step 9: Verify footer with contact info is present"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Navigation menu works on all pages",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Click on 'Servicii' menu item",
+      "Step 3: Verify navigation to /servicii",
+      "Step 4: Click on 'Pachete' menu item",
+      "Step 5: Verify navigation to /pachete",
+      "Step 6: Click on 'Portofoliu' menu item",
+      "Step 7: Verify navigation to /portofoliu",
+      "Step 8: Click on 'Blog' menu item",
+      "Step 9: Verify navigation to /blog",
+      "Step 10: Click on 'Contact' menu item",
+      "Step 11: Verify navigation to /contact"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Contact form submission works end-to-end",
+    "steps": [
+      "Step 1: Navigate to /contact page",
+      "Step 2: Fill in 'Nume complet' field",
+      "Step 3: Fill in 'Email' field with valid email",
+      "Step 4: Fill in 'Telefon' field",
+      "Step 5: Select 'Tip serviciu' from dropdown",
+      "Step 6: Select 'Buget estimat' from dropdown",
+      "Step 7: Fill in 'Descriere proiect' textarea",
+      "Step 8: Submit the form",
+      "Step 9: Verify success message appears",
+      "Step 10: Verify form data is saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Multi-step quote request form works correctly",
+    "steps": [
+      "Step 1: Navigate to /solicita-oferta",
+      "Step 2: Select project type in Step 1",
+      "Step 3: Click 'Next' button",
+      "Step 4: Fill in technical details in Step 2",
+      "Step 5: Click 'Next' button",
+      "Step 6: Fill in timeline and budget in Step 3",
+      "Step 7: Click 'Next' button",
+      "Step 8: Fill in contact information in Step 4",
+      "Step 9: Review summary",
+      "Step 10: Submit the quote request",
+      "Step 11: Verify success message",
+      "Step 12: Verify data saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can register a new account",
+    "steps": [
+      "Step 1: Navigate to /register",
+      "Step 2: Fill in email field",
+      "Step 3: Fill in password field",
+      "Step 4: Fill in first name",
+      "Step 5: Fill in last name",
+      "Step 6: Submit registration form",
+      "Step 7: Verify success message",
+      "Step 8: Verify user created in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can login with valid credentials",
+    "steps": [
+      "Step 1: Navigate to /login",
+      "Step 2: Enter valid email",
+      "Step 3: Enter valid password",
+      "Step 4: Click login button",
+      "Step 5: Verify redirect to /client dashboard",
+      "Step 6: Verify JWT token is stored"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User cannot login with invalid credentials",
+    "steps": [
+      "Step 1: Navigate to /login",
+      "Step 2: Enter invalid email",
+      "Step 3: Enter wrong password",
+      "Step 4: Click login button",
+      "Step 5: Verify error message appears",
+      "Step 6: Verify user stays on login page"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client dashboard displays project overview",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client",
+      "Step 3: Verify welcome message displays",
+      "Step 4: Verify active projects overview section exists",
+      "Step 5: Verify recent updates section exists",
+      "Step 6: Verify quick actions section exists"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can view their projects list",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/proiecte",
+      "Step 3: Verify projects list displays",
+      "Step 4: Verify each project shows status badge",
+      "Step 5: Click on a project",
+      "Step 6: Verify project details page loads"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can view project timeline and milestones",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/proiecte",
+      "Step 3: Click on a project",
+      "Step 4: Verify timeline with milestones displays",
+      "Step 5: Verify progress bar shows completion percentage",
+      "Step 6: Verify project updates/comments section exists",
+      "Step 7: Verify files/deliverables section exists"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can create a support ticket",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/suport",
+      "Step 3: Click 'Create new ticket' button",
+      "Step 4: Fill in subject field",
+      "Step 5: Fill in message field",
+      "Step 6: Select project from dropdown",
+      "Step 7: Submit ticket",
+      "Step 8: Verify ticket appears in list",
+      "Step 9: Verify ticket saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can reply to support ticket",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/suport",
+      "Step 3: Click on an existing ticket",
+      "Step 4: Verify message thread displays",
+      "Step 5: Type reply in message field",
+      "Step 6: Submit reply",
+      "Step 7: Verify new message appears in thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can attach files to support ticket",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/suport",
+      "Step 3: Open an existing ticket",
+      "Step 4: Click attach file button",
+      "Step 5: Select file from computer",
+      "Step 6: Submit message with attachment",
+      "Step 7: Verify file appears in message",
+      "Step 8: Verify file saved to server"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can view invoices list",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/facturi",
+      "Step 3: Verify invoices list displays",
+      "Step 4: Verify each invoice shows payment status",
+      "Step 5: Verify invoice amounts display correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can download invoice PDF",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/facturi",
+      "Step 3: Click download button on an invoice",
+      "Step 4: Verify PDF file downloads",
+      "Step 5: Verify PDF contains correct invoice data"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can update profile information",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/setari",
+      "Step 3: Update first name field",
+      "Step 4: Update phone number",
+      "Step 5: Click save button",
+      "Step 6: Verify success message appears",
+      "Step 7: Verify changes saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can change password",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/setari",
+      "Step 3: Click 'Change password' section",
+      "Step 4: Enter current password",
+      "Step 5: Enter new password",
+      "Step 6: Confirm new password",
+      "Step 7: Submit password change",
+      "Step 8: Verify success message",
+      "Step 9: Verify can login with new password"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Client can update notification preferences",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Navigate to /client/setari",
+      "Step 3: Toggle email notification preferences",
+      "Step 4: Save preferences",
+      "Step 5: Verify success message",
+      "Step 6: Verify preferences saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "User can logout successfully",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Click logout button",
+      "Step 3: Verify redirect to homepage or login",
+      "Step 4: Verify JWT token is cleared",
+      "Step 5: Verify cannot access protected routes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Forgot password flow works correctly",
+    "steps": [
+      "Step 1: Navigate to /login",
+      "Step 2: Click 'Forgot password' link",
+      "Step 3: Enter email address",
+      "Step 4: Submit form",
+      "Step 5: Verify success message",
+      "Step 6: Verify email sent (check logs)",
+      "Step 7: Use reset link to navigate to reset page",
+      "Step 8: Enter new password",
+      "Step 9: Confirm password",
+      "Step 10: Submit reset form",
+      "Step 11: Verify can login with new password"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Services page displays all service categories",
+    "steps": [
+      "Step 1: Navigate to /servicii",
+      "Step 2: Verify 'Module E-commerce' section displays",
+      "Step 3: Verify 'Automatizări Software' section displays",
+      "Step 4: Verify 'Bug Fixing & Mentenanță' section displays",
+      "Step 5: Verify 'Dezvoltare Web Custom' section displays",
+      "Step 6: Verify process timeline section exists",
+      "Step 7: Verify FAQ accordion exists"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Services API returns all services",
+    "steps": [
+      "Step 1: Make GET request to /api/services",
+      "Step 2: Verify response status is 200",
+      "Step 3: Verify response contains array of services",
+      "Step 4: Verify each service has required fields (name, category, description)",
+      "Step 5: Verify services are ordered by order_index"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Service detail API works correctly",
+    "steps": [
+      "Step 1: Make GET request to /api/services/:slug",
+      "Step 2: Verify response status is 200",
+      "Step 3: Verify service details returned",
+      "Step 4: Verify features array is included",
+      "Step 5: Verify full description is present"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Pricing packages page displays all tiers",
+    "steps": [
+      "Step 1: Navigate to /pachete",
+      "Step 2: Verify Starter package card displays",
+      "Step 3: Verify Professional package card displays",
+      "Step 4: Verify Enterprise package card displays",
+      "Step 5: Verify all package features are listed",
+      "Step 6: Verify pricing information is visible",
+      "Step 7: Verify add-ons section exists"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Packages API returns pricing data",
+    "steps": [
+      "Step 1: Make GET request to /api/packages",
+      "Step 2: Verify response status is 200",
+      "Step 3: Verify all three packages returned",
+      "Step 4: Verify each package has name, price, features",
+      "Step 5: Verify popular package is marked"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Portfolio page displays project cards",
+    "steps": [
+      "Step 1: Navigate to /portofoliu",
+      "Step 2: Verify portfolio grid displays",
+      "Step 3: Verify project cards show screenshots/logos",
+      "Step 4: Verify each card shows project name and category",
+      "Step 5: Verify 'Vezi detalii' button exists on each card"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Portfolio filter by category works",
+    "steps": [
+      "Step 1: Navigate to /portofoliu",
+      "Step 2: Click 'Module PrestaShop' filter",
+      "Step 3: Verify only PrestaShop projects display",
+      "Step 4: Click 'Module WooCommerce' filter",
+      "Step 5: Verify only WooCommerce projects display",
+      "Step 6: Click 'All' or reset filter",
+      "Step 7: Verify all projects display again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Portfolio detail page shows complete project information",
+    "steps": [
+      "Step 1: Navigate to /portofoliu",
+      "Step 2: Click on a project card",
+      "Step 3: Verify navigation to /portofoliu/:slug",
+      "Step 4: Verify challenge section displays",
+      "Step 5: Verify solution section displays",
+      "Step 6: Verify results section displays",
+      "Step 7: Verify technologies used are listed",
+      "Step 8: Verify testimonial displays if available",
+      "Step 9: Verify project images display"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Portfolio API returns all items",
+    "steps": [
+      "Step 1: Make GET request to /api/portfolio",
+      "Step 2: Verify response status is 200",
+      "Step 3: Verify portfolio items array returned",
+      "Step 4: Verify only published items returned",
+      "Step 5: Verify each item has required fields"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog page displays article grid",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Verify blog hero section with search",
+      "Step 3: Verify categories are listed",
+      "Step 4: Verify featured article displays",
+      "Step 5: Verify article grid displays",
+      "Step 6: Verify sidebar with categories exists",
+      "Step 7: Verify pagination controls exist"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog search functionality works",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Enter search term in search box",
+      "Step 3: Submit search",
+      "Step 4: Verify filtered articles display",
+      "Step 5: Verify search term is highlighted or shown",
+      "Step 6: Clear search",
+      "Step 7: Verify all articles display again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog category filter works",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Click on 'Tutoriale' category",
+      "Step 3: Verify only tutorial articles display",
+      "Step 4: Click on 'Case Studies' category",
+      "Step 5: Verify only case study articles display"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog article page displays correctly",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Click on an article",
+      "Step 3: Verify navigation to /blog/:slug",
+      "Step 4: Verify article header displays",
+      "Step 5: Verify featured image displays",
+      "Step 6: Verify article content displays",
+      "Step 7: Verify table of contents displays",
+      "Step 8: Verify related articles section exists",
+      "Step 9: Verify share buttons exist",
+      "Step 10: Verify CTA section displays"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog article with code snippets displays syntax highlighting",
+    "steps": [
+      "Step 1: Navigate to a blog article with code snippets",
+      "Step 2: Verify code blocks are highlighted",
+      "Step 3: Verify code uses JetBrains Mono font",
+      "Step 4: Verify code is readable and properly formatted"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog pagination works correctly",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Scroll to pagination controls",
+      "Step 3: Click 'Next' or page 2",
+      "Step 4: Verify page 2 articles load",
+      "Step 5: Click 'Previous' or page 1",
+      "Step 6: Verify page 1 articles load again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog API returns published posts",
+    "steps": [
+      "Step 1: Make GET request to /api/blog",
+      "Step 2: Verify response status is 200",
+      "Step 3: Verify array of blog posts returned",
+      "Step 4: Verify only published posts returned",
+      "Step 5: Verify posts ordered by published_at desc"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Newsletter subscription works",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Enter email in newsletter signup field",
+      "Step 3: Submit subscription",
+      "Step 4: Verify success message",
+      "Step 5: Verify email saved in newsletter_subscribers table"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "About page displays company information",
+    "steps": [
+      "Step 1: Navigate to /despre-noi",
+      "Step 2: Verify company story section displays",
+      "Step 3: Verify mission statement displays",
+      "Step 4: Verify company values are listed",
+      "Step 5: Verify team section exists",
+      "Step 6: Verify certifications/partners section displays"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Contact form validates required fields",
+    "steps": [
+      "Step 1: Navigate to /contact",
+      "Step 2: Submit form without filling fields",
+      "Step 3: Verify validation errors display",
+      "Step 4: Fill in only name field",
+      "Step 5: Submit form",
+      "Step 6: Verify email field shows validation error"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Contact form validates email format",
+    "steps": [
+      "Step 1: Navigate to /contact",
+      "Step 2: Enter invalid email format",
+      "Step 3: Submit form",
+      "Step 4: Verify email format validation error",
+      "Step 5: Enter valid email",
+      "Step 6: Verify validation error clears"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Contact form file attachment works",
+    "steps": [
+      "Step 1: Navigate to /contact",
+      "Step 2: Fill in all required fields",
+      "Step 3: Click attach file button",
+      "Step 4: Select file from computer",
+      "Step 5: Verify file name displays",
+      "Step 6: Submit form",
+      "Step 7: Verify file uploaded to server",
+      "Step 8: Verify file path saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quote request form Step 1 (project type) works",
+    "steps": [
+      "Step 1: Navigate to /solicita-oferta",
+      "Step 2: Verify Step 1 displays",
+      "Step 3: Select project type option",
+      "Step 4: Click Next button",
+      "Step 5: Verify navigation to Step 2",
+      "Step 6: Verify progress indicator updates"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quote request form Step 2 (technical details) works",
+    "steps": [
+      "Step 1: Navigate to /solicita-oferta and complete Step 1",
+      "Step 2: Verify Step 2 displays",
+      "Step 3: Select platform (PrestaShop/WooCommerce/etc)",
+      "Step 4: Fill in technical requirements",
+      "Step 5: Click Next button",
+      "Step 6: Verify navigation to Step 3"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quote request form Step 3 (timeline & budget) works",
+    "steps": [
+      "Step 1: Navigate to /solicita-oferta and complete Steps 1-2",
+      "Step 2: Verify Step 3 displays",
+      "Step 3: Select timeline",
+      "Step 4: Select budget range",
+      "Step 5: Click Next button",
+      "Step 6: Verify navigation to Step 4"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quote request form Step 4 (contact info) works",
+    "steps": [
+      "Step 1: Navigate to /solicita-oferta and complete Steps 1-3",
+      "Step 2: Verify Step 4 displays",
+      "Step 3: Fill in name",
+      "Step 4: Fill in email",
+      "Step 5: Fill in phone",
+      "Step 6: Fill in company name",
+      "Step 7: Verify summary displays all entered data"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quote request form can navigate back to previous steps",
+    "steps": [
+      "Step 1: Navigate to /solicita-oferta",
+      "Step 2: Complete Step 1 and go to Step 2",
+      "Step 3: Click 'Back' button",
+      "Step 4: Verify Step 1 displays with previous data",
+      "Step 5: Navigate forward again",
+      "Step 6: Verify data is retained"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quote request final submission saves to database",
+    "steps": [
+      "Step 1: Navigate to /solicita-oferta",
+      "Step 2: Complete all steps with valid data",
+      "Step 3: Review summary",
+      "Step 4: Submit quote request",
+      "Step 5: Verify success message",
+      "Step 6: Verify data saved in quote_requests table",
+      "Step 7: Verify status is 'new'"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Terms and conditions page displays",
+    "steps": [
+      "Step 1: Navigate to /termeni",
+      "Step 2: Verify page loads successfully",
+      "Step 3: Verify legal terms content displays",
+      "Step 4: Verify page is accessible from footer"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Privacy policy page displays",
+    "steps": [
+      "Step 1: Navigate to /confidentialitate",
+      "Step 2: Verify page loads successfully",
+      "Step 3: Verify GDPR-compliant content displays",
+      "Step 4: Verify page is accessible from footer"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Protected routes redirect unauthenticated users to login",
+    "steps": [
+      "Step 1: Ensure user is not logged in",
+      "Step 2: Navigate to /client",
+      "Step 3: Verify redirect to /login",
+      "Step 4: Navigate to /client/proiecte",
+      "Step 5: Verify redirect to /login",
+      "Step 6: Navigate to /client/suport",
+      "Step 7: Verify redirect to /login"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "JWT token refresh mechanism works",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Verify access token stored",
+      "Step 3: Wait for token to near expiry",
+      "Step 4: Make authenticated API request",
+      "Step 5: Verify token is refreshed automatically",
+      "Step 6: Verify new token stored"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Email verification flow works",
+    "steps": [
+      "Step 1: Register new user account",
+      "Step 2: Verify verification email sent",
+      "Step 3: Extract verification link from email",
+      "Step 4: Navigate to verification link",
+      "Step 5: Verify account activated",
+      "Step 6: Verify email_verified flag set to 1",
+      "Step 7: Verify can login successfully"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can access admin dashboard",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to admin dashboard",
+      "Step 3: Verify KPI widgets display",
+      "Step 4: Verify recent activity displays",
+      "Step 5: Verify admin navigation menu displays"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can create new service",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to services management",
+      "Step 3: Click 'Add new service' button",
+      "Step 4: Fill in service name",
+      "Step 5: Fill in category",
+      "Step 6: Fill in description",
+      "Step 7: Add features",
+      "Step 8: Save service",
+      "Step 9: Verify service appears in list",
+      "Step 10: Verify service saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can edit existing service",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to services management",
+      "Step 3: Click edit on a service",
+      "Step 4: Modify service name",
+      "Step 5: Update description",
+      "Step 6: Save changes",
+      "Step 7: Verify changes reflected in list",
+      "Step 8: Verify changes saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can delete service",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to services management",
+      "Step 3: Click delete on a service",
+      "Step 4: Confirm deletion",
+      "Step 5: Verify service removed from list",
+      "Step 6: Verify service deleted or deactivated in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can create new package",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to packages management",
+      "Step 3: Click 'Add new package' button",
+      "Step 4: Fill in package name",
+      "Step 5: Set price",
+      "Step 6: Add features list",
+      "Step 7: Mark as popular if needed",
+      "Step 8: Save package",
+      "Step 9: Verify package appears in list"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can create portfolio item",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to portfolio management",
+      "Step 3: Click 'Add new project' button",
+      "Step 4: Fill in project title",
+      "Step 5: Select category",
+      "Step 6: Fill in challenge, solution, results",
+      "Step 7: Add technologies",
+      "Step 8: Upload images",
+      "Step 9: Save portfolio item",
+      "Step 10: Verify item appears in list"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can publish/unpublish portfolio items",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to portfolio management",
+      "Step 3: Click on a published item",
+      "Step 4: Toggle publish status to unpublished",
+      "Step 5: Save changes",
+      "Step 6: Verify item not visible on public portfolio page",
+      "Step 7: Publish item again",
+      "Step 8: Verify item visible on public portfolio page"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can create blog post",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to blog management",
+      "Step 3: Click 'Create new post' button",
+      "Step 4: Fill in title",
+      "Step 5: Write excerpt",
+      "Step 6: Write content with code snippets",
+      "Step 7: Select category",
+      "Step 8: Upload featured image",
+      "Step 9: Save as draft",
+      "Step 10: Verify post appears in drafts list"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can publish blog post",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to blog management",
+      "Step 3: Open a draft post",
+      "Step 4: Click 'Publish' button",
+      "Step 5: Verify post status changes to published",
+      "Step 6: Verify post visible on public blog page",
+      "Step 7: Verify published_at timestamp set"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can view contact form submissions",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to contacts management",
+      "Step 3: Verify list of contact submissions displays",
+      "Step 4: Verify each submission shows name, email, date",
+      "Step 5: Click on a submission",
+      "Step 6: Verify full details display"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can update contact submission status",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to contacts management",
+      "Step 3: Click on a contact submission",
+      "Step 4: Change status from 'new' to 'contacted'",
+      "Step 5: Add notes",
+      "Step 6: Save changes",
+      "Step 7: Verify status updated in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can view quote requests",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to quote requests management",
+      "Step 3: Verify list of quote requests displays",
+      "Step 4: Verify each shows project type, budget, date",
+      "Step 5: Click on a quote request",
+      "Step 6: Verify all form data displays correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can update quote request status and add pricing",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to quote requests management",
+      "Step 3: Click on a quote request",
+      "Step 4: Change status to 'reviewing'",
+      "Step 5: Enter quoted price",
+      "Step 6: Add notes",
+      "Step 7: Save changes",
+      "Step 8: Verify changes saved in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can create new project",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to projects management",
+      "Step 3: Click 'Create new project' button",
+      "Step 4: Select client from dropdown",
+      "Step 5: Fill in project name",
+      "Step 6: Fill in description",
+      "Step 7: Set service type",
+      "Step 8: Set price and deadline",
+      "Step 9: Save project",
+      "Step 10: Verify project appears in list",
+      "Step 11: Verify client can see project in their portal"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can update project status",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to projects management",
+      "Step 3: Click on a project",
+      "Step 4: Change status from 'approved' to 'in_progress'",
+      "Step 5: Update progress percentage",
+      "Step 6: Save changes",
+      "Step 7: Verify status updated in database",
+      "Step 8: Verify client sees updated status"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can add project milestones",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to a project detail",
+      "Step 3: Click 'Add milestone' button",
+      "Step 4: Fill in milestone title",
+      "Step 5: Fill in description",
+      "Step 6: Set due date",
+      "Step 7: Save milestone",
+      "Step 8: Verify milestone appears in project timeline",
+      "Step 9: Verify client can see milestone"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can post project updates",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to a project detail",
+      "Step 3: Click 'Post update' button",
+      "Step 4: Fill in update title",
+      "Step 5: Write update content",
+      "Step 6: Post update",
+      "Step 7: Verify update appears in project feed",
+      "Step 8: Verify client receives notification",
+      "Step 9: Verify client can see update"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can upload project files",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to a project detail",
+      "Step 3: Click 'Upload file' button",
+      "Step 4: Select file from computer",
+      "Step 5: Add file description",
+      "Step 6: Mark as deliverable if applicable",
+      "Step 7: Upload file",
+      "Step 8: Verify file appears in project files",
+      "Step 9: Verify client can download file"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can view and respond to support tickets",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to support tickets",
+      "Step 3: Click on an open ticket",
+      "Step 4: Read ticket messages",
+      "Step 5: Type response message",
+      "Step 6: Send response",
+      "Step 7: Verify message appears in thread",
+      "Step 8: Verify client receives notification"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can update ticket status",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to support tickets",
+      "Step 3: Click on a ticket",
+      "Step 4: Change status from 'open' to 'in_progress'",
+      "Step 5: Save changes",
+      "Step 6: Verify status updated",
+      "Step 7: Change status to 'resolved'",
+      "Step 8: Verify resolved_at timestamp set"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can create invoice",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to invoices management",
+      "Step 3: Click 'Create invoice' button",
+      "Step 4: Select project",
+      "Step 5: Fill in amount",
+      "Step 6: Set due date",
+      "Step 7: Save invoice",
+      "Step 8: Verify invoice appears in list",
+      "Step 9: Verify client can see invoice",
+      "Step 10: Verify invoice number generated"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can generate invoice PDF",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to invoices management",
+      "Step 3: Click on an invoice",
+      "Step 4: Click 'Generate PDF' button",
+      "Step 5: Verify PDF generated",
+      "Step 6: Verify PDF path saved in database",
+      "Step 7: Verify client can download PDF"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can mark invoice as paid",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to invoices management",
+      "Step 3: Click on an invoice",
+      "Step 4: Change status to 'paid'",
+      "Step 5: Set paid date",
+      "Step 6: Save changes",
+      "Step 7: Verify status updated",
+      "Step 8: Verify client sees updated status"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin dashboard shows accurate KPIs",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to admin dashboard",
+      "Step 3: Verify total projects count displays",
+      "Step 4: Verify active projects count displays",
+      "Step 5: Verify pending quotes count displays",
+      "Step 6: Verify revenue statistics display",
+      "Step 7: Verify recent activity feed displays"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Admin can manage users",
+    "steps": [
+      "Step 1: Login as admin user",
+      "Step 2: Navigate to users management",
+      "Step 3: Verify list of users displays",
+      "Step 4: Click on a user",
+      "Step 5: Update user role",
+      "Step 6: Save changes",
+      "Step 7: Verify role updated in database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "API authentication middleware protects endpoints",
+    "steps": [
+      "Step 1: Make request to /api/client/dashboard without token",
+      "Step 2: Verify response is 401 Unauthorized",
+      "Step 3: Make request with invalid token",
+      "Step 4: Verify response is 401 Unauthorized",
+      "Step 5: Login and get valid token",
+      "Step 6: Make request with valid token",
+      "Step 7: Verify response is 200 OK"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "API role-based access control works",
+    "steps": [
+      "Step 1: Login as client user",
+      "Step 2: Get JWT token",
+      "Step 3: Make request to /api/admin/dashboard",
+      "Step 4: Verify response is 403 Forbidden",
+      "Step 5: Login as admin user",
+      "Step 6: Make same request with admin token",
+      "Step 7: Verify response is 200 OK"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "API handles validation errors properly",
+    "steps": [
+      "Step 1: Make POST to /api/contact with missing fields",
+      "Step 2: Verify response is 400 Bad Request",
+      "Step 3: Verify error message lists missing fields",
+      "Step 4: Make POST with invalid email format",
+      "Step 5: Verify response is 400 Bad Request",
+      "Step 6: Verify error message indicates email format issue"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "API handles server errors gracefully",
+    "steps": [
+      "Step 1: Make request that triggers server error",
+      "Step 2: Verify response is 500 Internal Server Error",
+      "Step 3: Verify error message is user-friendly",
+      "Step 4: Verify sensitive data not exposed",
+      "Step 5: Verify error logged server-side"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Database migrations run successfully",
+    "steps": [
+      "Step 1: Run database initialization script",
+      "Step 2: Verify all tables created",
+      "Step 3: Verify correct schema for users table",
+      "Step 4: Verify correct schema for projects table",
+      "Step 5: Verify all foreign keys created",
+      "Step 6: Verify indexes created on key fields"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Seed data can be loaded into database",
+    "steps": [
+      "Step 1: Run seed data script",
+      "Step 2: Verify sample services created",
+      "Step 3: Verify sample packages created",
+      "Step 4: Verify sample portfolio items created",
+      "Step 5: Verify sample blog posts created",
+      "Step 6: Verify admin user created"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Contact form sends email notification",
+    "steps": [
+      "Step 1: Submit contact form",
+      "Step 2: Verify email sent to admin",
+      "Step 3: Verify email contains form data",
+      "Step 4: Verify confirmation email sent to user",
+      "Step 5: Check email logs for success"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quote request sends email notification",
+    "steps": [
+      "Step 1: Submit quote request form",
+      "Step 2: Verify email sent to admin",
+      "Step 3: Verify email contains all form data",
+      "Step 4: Verify confirmation email sent to requester"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Project update sends notification to client",
+    "steps": [
+      "Step 1: Admin posts project update",
+      "Step 2: Verify email sent to client",
+      "Step 3: Verify notification appears in client dashboard",
+      "Step 4: Client can mark notification as read"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Support ticket reply sends notification",
+    "steps": [
+      "Step 1: Admin replies to support ticket",
+      "Step 2: Verify email sent to client",
+      "Step 3: Client replies to ticket",
+      "Step 4: Verify email sent to admin"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "File upload size limits enforced",
+    "steps": [
+      "Step 1: Attempt to upload file larger than limit",
+      "Step 2: Verify error message displays",
+      "Step 3: Verify file not saved to server",
+      "Step 4: Upload file within size limit",
+      "Step 5: Verify upload succeeds"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "File upload type restrictions enforced",
+    "steps": [
+      "Step 1: Attempt to upload executable file",
+      "Step 2: Verify error message displays",
+      "Step 3: Verify file not saved",
+      "Step 4: Upload allowed file type (PDF, image)",
+      "Step 5: Verify upload succeeds"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Session timeout works correctly",
+    "steps": [
+      "Step 1: Login as user",
+      "Step 2: Wait for session timeout period",
+      "Step 3: Attempt to access protected page",
+      "Step 4: Verify redirect to login",
+      "Step 5: Verify session cleared from database"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Remember me functionality works",
+    "steps": [
+      "Step 1: Login with 'Remember me' checked",
+      "Step 2: Close browser",
+      "Step 3: Reopen browser",
+      "Step 4: Navigate to site",
+      "Step 5: Verify user still logged in"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Search functionality works across site",
+    "steps": [
+      "Step 1: Enter search term in site search",
+      "Step 2: Submit search",
+      "Step 3: Verify results page displays",
+      "Step 4: Verify results include relevant pages",
+      "Step 5: Verify results include blog posts",
+      "Step 6: Verify results include services"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Social media share buttons work",
+    "steps": [
+      "Step 1: Navigate to blog article",
+      "Step 2: Click Facebook share button",
+      "Step 3: Verify Facebook share dialog opens",
+      "Step 4: Click Twitter share button",
+      "Step 5: Verify Twitter share dialog opens",
+      "Step 6: Click LinkedIn share button",
+      "Step 7: Verify LinkedIn share dialog opens"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Related articles display correctly",
+    "steps": [
+      "Step 1: Navigate to blog article",
+      "Step 2: Scroll to related articles section",
+      "Step 3: Verify 3-4 related articles display",
+      "Step 4: Verify articles are from same category",
+      "Step 5: Click on related article",
+      "Step 6: Verify navigation to that article"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Table of contents on blog articles works",
+    "steps": [
+      "Step 1: Navigate to long blog article",
+      "Step 2: Verify table of contents displays",
+      "Step 3: Click on TOC item",
+      "Step 4: Verify page scrolls to that section",
+      "Step 5: Verify TOC is sticky on scroll"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Testimonials slider works on homepage",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Scroll to testimonials section",
+      "Step 3: Verify first testimonial displays",
+      "Step 4: Click next arrow or wait for auto-advance",
+      "Step 5: Verify second testimonial displays",
+      "Step 6: Click previous arrow",
+      "Step 7: Verify first testimonial displays again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Featured projects carousel works",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Scroll to featured projects section",
+      "Step 3: Verify carousel displays",
+      "Step 4: Click next arrow",
+      "Step 5: Verify next project displays",
+      "Step 6: Verify smooth transition animation",
+      "Step 7: Verify carousel loops back to start"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Stats counter animates on scroll into view",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Scroll to stats section",
+      "Step 3: Verify counters animate from 0 to target number",
+      "Step 4: Verify animation triggers when section in viewport",
+      "Step 5: Verify all three counters animate"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "CTA buttons navigate to correct pages",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Click 'Solicită o ofertă gratuită' CTA",
+      "Step 3: Verify navigation to /solicita-oferta",
+      "Step 4: Navigate back to homepage",
+      "Step 5: Click service card CTA",
+      "Step 6: Verify navigation to service detail"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Footer displays all required information",
+    "steps": [
+      "Step 1: Navigate to any page",
+      "Step 2: Scroll to footer",
+      "Step 3: Verify company contact info displays",
+      "Step 4: Verify email address is clickable",
+      "Step 5: Verify phone number displays",
+      "Step 6: Verify footer navigation links work",
+      "Step 7: Verify social media links display"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "FAQ accordion on services page works",
+    "steps": [
+      "Step 1: Navigate to /servicii",
+      "Step 2: Scroll to FAQ section",
+      "Step 3: Click on first FAQ question",
+      "Step 4: Verify answer expands",
+      "Step 5: Click on second question",
+      "Step 6: Verify second answer expands",
+      "Step 7: Verify first answer collapses or stays open based on design"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Process timeline displays on services page",
+    "steps": [
+      "Step 1: Navigate to /servicii",
+      "Step 2: Scroll to process timeline section",
+      "Step 3: Verify timeline displays all steps",
+      "Step 4: Verify each step has icon/number",
+      "Step 5: Verify step descriptions are readable"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Technologies logos display on homepage",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Scroll to technologies section",
+      "Step 3: Verify PrestaShop logo displays",
+      "Step 4: Verify WooCommerce logo displays",
+      "Step 5: Verify Magento logo displays",
+      "Step 6: Verify React logo displays",
+      "Step 7: Verify Node.js logo displays"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Project progress percentage displays correctly",
+    "steps": [
+      "Step 1: Login as client",
+      "Step 2: Navigate to project detail",
+      "Step 3: Verify progress bar displays",
+      "Step 4: Verify percentage number displays",
+      "Step 5: Verify progress bar filled to correct percentage"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Milestone status updates correctly",
+    "steps": [
+      "Step 1: Admin updates milestone status to 'completed'",
+      "Step 2: Set completed_date",
+      "Step 3: Save changes",
+      "Step 4: Client views project timeline",
+      "Step 5: Verify milestone shows as completed",
+      "Step 6: Verify completed date displays"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Project files are downloadable by client",
+    "steps": [
+      "Step 1: Login as client",
+      "Step 2: Navigate to project detail",
+      "Step 3: Scroll to files section",
+      "Step 4: Click download on a file",
+      "Step 5: Verify file downloads successfully"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Deliverable files are clearly marked",
+    "steps": [
+      "Step 1: Login as client",
+      "Step 2: Navigate to project detail",
+      "Step 3: View files list",
+      "Step 4: Verify deliverable files have special badge/icon",
+      "Step 5: Verify regular files do not have deliverable badge"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog post view count increments",
+    "steps": [
+      "Step 1: Note current view count of a blog post",
+      "Step 2: Navigate to that blog post",
+      "Step 3: Wait for page load",
+      "Step 4: Check database for view count",
+      "Step 5: Verify count incremented by 1"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Popular posts display in blog sidebar",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Verify sidebar displays",
+      "Step 3: Verify 'Popular posts' section exists",
+      "Step 4: Verify posts ordered by view count",
+      "Step 5: Click on a popular post",
+      "Step 6: Verify navigation to that post"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Reading time calculation displays on blog posts",
+    "steps": [
+      "Step 1: Navigate to blog article",
+      "Step 2: Verify reading time displays in header",
+      "Step 3: Verify format is '5 min read' or similar",
+      "Step 4: Verify time is reasonable for content length"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blog categories endpoint returns correct data",
+    "steps": [
+      "Step 1: Make GET request to /api/blog/categories",
+      "Step 2: Verify response status is 200",
+      "Step 3: Verify array of categories returned",
+      "Step 4: Verify each category has name and count",
+      "Step 5: Verify counts match actual posts"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Password strength validation works on registration",
+    "steps": [
+      "Step 1: Navigate to /register",
+      "Step 2: Enter weak password (e.g., '123')",
+      "Step 3: Verify password strength indicator shows weak",
+      "Step 4: Verify validation error on submit",
+      "Step 5: Enter strong password",
+      "Step 6: Verify strength indicator shows strong",
+      "Step 7: Verify form submits successfully"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "API rate limiting prevents abuse",
+    "steps": [
+      "Step 1: Make multiple rapid requests to API endpoint",
+      "Step 2: Verify rate limit not exceeded initially",
+      "Step 3: Continue making requests rapidly",
+      "Step 4: Verify rate limit exceeded response (429)",
+      "Step 5: Wait for rate limit reset",
+      "Step 6: Verify requests work again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SQL injection attacks are prevented",
+    "steps": [
+      "Step 1: Submit form with SQL injection attempt",
+      "Step 2: Verify input is sanitized",
+      "Step 3: Verify no database error occurs",
+      "Step 4: Verify malicious code not executed",
+      "Step 5: Verify data stored safely"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "XSS attacks are prevented",
+    "steps": [
+      "Step 1: Submit form with script tags",
+      "Step 2: View submitted data on page",
+      "Step 3: Verify script not executed",
+      "Step 4: Verify HTML is escaped",
+      "Step 5: Verify no XSS vulnerability"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "CSRF protection works on forms",
+    "steps": [
+      "Step 1: Inspect form HTML",
+      "Step 2: Verify CSRF token present",
+      "Step 3: Submit form without token",
+      "Step 4: Verify request rejected",
+      "Step 5: Submit with valid token",
+      "Step 6: Verify request succeeds"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Password reset token expires correctly",
+    "steps": [
+      "Step 1: Request password reset",
+      "Step 2: Get reset token",
+      "Step 3: Wait for token expiry time",
+      "Step 4: Attempt to use expired token",
+      "Step 5: Verify error message displays",
+      "Step 6: Verify password not changed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Homepage hero section has animated code background",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Take screenshot of hero section",
+      "Step 3: Verify code animation is present",
+      "Step 4: Verify animation is smooth",
+      "Step 5: Verify hero text is readable over background"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Color scheme matches design system throughout site",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Verify primary color #6366F1 used for main elements",
+      "Step 3: Verify secondary color #10B981 used for success states",
+      "Step 4: Verify accent color #F59E0B used for CTAs",
+      "Step 5: Navigate to other pages",
+      "Step 6: Verify consistent color usage",
+      "Step 7: Take screenshots for verification"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Typography uses Inter font for headings and body",
+    "steps": [
+      "Step 1: Navigate to any page",
+      "Step 2: Inspect heading elements",
+      "Step 3: Verify Inter font is applied",
+      "Step 4: Verify bold weight for headings",
+      "Step 5: Inspect body text",
+      "Step 6: Verify Inter font with regular weight"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Code snippets use JetBrains Mono font",
+    "steps": [
+      "Step 1: Navigate to blog article with code",
+      "Step 2: Inspect code block",
+      "Step 3: Verify JetBrains Mono font applied",
+      "Step 4: Verify monospace rendering",
+      "Step 5: Verify code is readable"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Service cards have consistent styling",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Take screenshot of services section",
+      "Step 3: Verify all 4 cards have same dimensions",
+      "Step 4: Verify icons are aligned",
+      "Step 5: Verify spacing is consistent",
+      "Step 6: Verify hover effects work on all cards"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Pricing cards have visual hierarchy",
+    "steps": [
+      "Step 1: Navigate to /pachete",
+      "Step 2: Take screenshot of pricing section",
+      "Step 3: Verify popular package is highlighted",
+      "Step 4: Verify cards are properly aligned",
+      "Step 5: Verify pricing is prominently displayed",
+      "Step 6: Verify feature lists are readable"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Navigation menu is fixed on scroll",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Scroll down the page",
+      "Step 3: Verify navigation stays fixed at top",
+      "Step 4: Verify navigation background changes on scroll",
+      "Step 5: Verify navigation remains accessible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Mobile menu displays correctly on small screens",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Resize viewport to mobile width",
+      "Step 3: Verify hamburger menu icon displays",
+      "Step 4: Click hamburger icon",
+      "Step 5: Verify mobile menu slides in",
+      "Step 6: Verify all menu items accessible",
+      "Step 7: Verify close button works"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "All pages are responsive on tablet",
+    "steps": [
+      "Step 1: Set viewport to tablet size (768px)",
+      "Step 2: Navigate through all main pages",
+      "Step 3: Take screenshots of each page",
+      "Step 4: Verify layouts adapt properly",
+      "Step 5: Verify no horizontal scroll",
+      "Step 6: Verify content is readable"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "All pages are responsive on mobile",
+    "steps": [
+      "Step 1: Set viewport to mobile size (375px)",
+      "Step 2: Navigate through all main pages",
+      "Step 3: Take screenshots of each page",
+      "Step 4: Verify layouts stack properly",
+      "Step 5: Verify no horizontal scroll",
+      "Step 6: Verify touch targets are adequate size",
+      "Step 7: Verify text is readable without zoom"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Buttons have consistent styling and hover states",
+    "steps": [
+      "Step 1: Navigate to various pages",
+      "Step 2: Identify all button types (primary, secondary, etc)",
+      "Step 3: Verify consistent padding and sizing",
+      "Step 4: Hover over buttons",
+      "Step 5: Verify hover effects are smooth",
+      "Step 6: Verify hover effects use correct colors"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Form inputs have consistent styling",
+    "steps": [
+      "Step 1: Navigate to contact form",
+      "Step 2: Inspect all input fields",
+      "Step 3: Verify consistent border styling",
+      "Step 4: Verify consistent padding",
+      "Step 5: Focus on input",
+      "Step 6: Verify focus state styling",
+      "Step 7: Verify error state styling"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Cards and containers have proper shadows",
+    "steps": [
+      "Step 1: Navigate to pages with cards",
+      "Step 2: Take screenshots of card elements",
+      "Step 3: Verify shadow depth is appropriate",
+      "Step 4: Verify shadows are consistent across pages",
+      "Step 5: Verify hover states increase shadow depth"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Spacing and padding are consistent throughout site",
+    "steps": [
+      "Step 1: Navigate to multiple pages",
+      "Step 2: Inspect section spacing",
+      "Step 3: Verify consistent padding values",
+      "Step 4: Verify consistent margins",
+      "Step 5: Verify spacing follows design system"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Icons are consistent size and style",
+    "steps": [
+      "Step 1: Navigate through site pages",
+      "Step 2: Identify all icon usage",
+      "Step 3: Verify icons from Lucide React library",
+      "Step 4: Verify consistent sizing",
+      "Step 5: Verify icons align with text properly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Loading states have appropriate animations",
+    "steps": [
+      "Step 1: Trigger loading state (form submit, page load)",
+      "Step 2: Verify loading spinner displays",
+      "Step 3: Verify animation is smooth",
+      "Step 4: Verify loading indicator is visible",
+      "Step 5: Verify loading state clears when complete"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Error messages are styled appropriately",
+    "steps": [
+      "Step 1: Trigger form validation error",
+      "Step 2: Verify error message displays in red",
+      "Step 3: Verify error icon displays",
+      "Step 4: Verify error message is readable",
+      "Step 5: Verify error styling is consistent across forms"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Success messages are styled appropriately",
+    "steps": [
+      "Step 1: Submit form successfully",
+      "Step 2: Verify success message displays in green",
+      "Step 3: Verify success icon displays",
+      "Step 4: Verify message is prominent",
+      "Step 5: Verify animation on appearance"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Status badges have distinct colors",
+    "steps": [
+      "Step 1: Navigate to projects list",
+      "Step 2: Verify 'in_progress' badge color",
+      "Step 3: Verify 'completed' badge color",
+      "Step 4: Verify 'pending' badge color",
+      "Step 5: Verify all badges are easily distinguishable"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Progress bars are visually appealing",
+    "steps": [
+      "Step 1: Navigate to project with progress bar",
+      "Step 2: Take screenshot of progress bar",
+      "Step 3: Verify smooth rounded corners",
+      "Step 4: Verify color gradient or solid color looks good",
+      "Step 5: Verify percentage text is visible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Modal dialogs are properly styled",
+    "steps": [
+      "Step 1: Trigger modal dialog",
+      "Step 2: Verify modal centers on screen",
+      "Step 3: Verify backdrop dims background",
+      "Step 4: Verify modal content is readable",
+      "Step 5: Verify close button is visible",
+      "Step 6: Verify modal animations are smooth"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Tables are properly styled and readable",
+    "steps": [
+      "Step 1: Navigate to page with table (invoices, projects)",
+      "Step 2: Take screenshot of table",
+      "Step 3: Verify header row is distinct",
+      "Step 4: Verify alternating row colors or dividers",
+      "Step 5: Verify table is responsive",
+      "Step 6: Verify text alignment is appropriate"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Testimonial cards are visually appealing",
+    "steps": [
+      "Step 1: Navigate to testimonials section",
+      "Step 2: Take screenshot",
+      "Step 3: Verify quote styling",
+      "Step 4: Verify client name and photo styling",
+      "Step 5: Verify card backgrounds and borders"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Portfolio project cards have consistent style",
+    "steps": [
+      "Step 1: Navigate to /portofoliu",
+      "Step 2: Take screenshot of portfolio grid",
+      "Step 3: Verify all cards same size",
+      "Step 4: Verify images properly cropped/scaled",
+      "Step 5: Verify hover effects work consistently"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Blog article cards have consistent style",
+    "steps": [
+      "Step 1: Navigate to /blog",
+      "Step 2: Take screenshot of article grid",
+      "Step 3: Verify consistent card dimensions",
+      "Step 4: Verify featured images display properly",
+      "Step 5: Verify excerpt text is readable",
+      "Step 6: Verify category badges are visible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Footer is well-designed and organized",
+    "steps": [
+      "Step 1: Navigate to any page",
+      "Step 2: Scroll to footer",
+      "Step 3: Take screenshot",
+      "Step 4: Verify footer sections are organized",
+      "Step 5: Verify footer links are visible",
+      "Step 6: Verify copyright notice is present",
+      "Step 7: Verify footer background contrasts with content"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Animations and transitions are smooth",
+    "steps": [
+      "Step 1: Navigate through site",
+      "Step 2: Observe page transitions",
+      "Step 3: Verify Framer Motion animations work",
+      "Step 4: Verify no janky animations",
+      "Step 5: Verify animations enhance UX"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Images load with proper aspect ratios",
+    "steps": [
+      "Step 1: Navigate to pages with images",
+      "Step 2: Verify images don't distort on load",
+      "Step 3: Verify placeholder or loading state",
+      "Step 4: Verify images responsive on different screen sizes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Romanian text displays correctly with diacritics",
+    "steps": [
+      "Step 1: Navigate to all pages",
+      "Step 2: Verify Romanian characters (ă, â, î, ș, ț) display correctly",
+      "Step 3: Verify no encoding issues",
+      "Step 4: Verify diacritics in headings and body text"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Client dashboard has clean, professional design",
+    "steps": [
+      "Step 1: Login as client",
+      "Step 2: Navigate to /client dashboard",
+      "Step 3: Take screenshot",
+      "Step 4: Verify layout is organized",
+      "Step 5: Verify widgets are well-designed",
+      "Step 6: Verify navigation is intuitive"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Admin dashboard has clean, professional design",
+    "steps": [
+      "Step 1: Login as admin",
+      "Step 2: Navigate to admin dashboard",
+      "Step 3: Take screenshot",
+      "Step 4: Verify KPI cards are well-designed",
+      "Step 5: Verify charts/graphs display properly",
+      "Step 6: Verify admin navigation is clear"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Form validation messages are well-positioned",
+    "steps": [
+      "Step 1: Navigate to any form",
+      "Step 2: Trigger validation errors",
+      "Step 3: Verify error messages appear near fields",
+      "Step 4: Verify messages don't break layout",
+      "Step 5: Verify messages are readable"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Breadcrumbs display correctly where applicable",
+    "steps": [
+      "Step 1: Navigate to nested page",
+      "Step 2: Verify breadcrumb navigation displays",
+      "Step 3: Verify breadcrumbs show correct path",
+      "Step 4: Verify breadcrumb links work",
+      "Step 5: Verify styling is subtle but visible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Empty states are well-designed",
+    "steps": [
+      "Step 1: Navigate to client with no projects",
+      "Step 2: Verify empty state displays",
+      "Step 3: Verify helpful message and icon",
+      "Step 4: Verify CTA to add first item",
+      "Step 5: Check other empty states (no tickets, no invoices)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "404 page is well-designed",
+    "steps": [
+      "Step 1: Navigate to non-existent page",
+      "Step 2: Verify 404 page displays",
+      "Step 3: Verify helpful error message",
+      "Step 4: Verify link back to homepage",
+      "Step 5: Verify page maintains site design"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Dark mode toggle works if implemented",
+    "steps": [
+      "Step 1: Look for dark mode toggle",
+      "Step 2: If present, click toggle",
+      "Step 3: Verify colors invert appropriately",
+      "Step 4: Verify readability maintained",
+      "Step 5: Verify preference saved"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Accessibility: Focus indicators are visible",
+    "steps": [
+      "Step 1: Navigate to any page",
+      "Step 2: Tab through interactive elements",
+      "Step 3: Verify focus ring/outline visible",
+      "Step 4: Verify focus indicator contrasts with background",
+      "Step 5: Verify all interactive elements focusable"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Accessibility: Color contrast meets WCAG AA standards",
+    "steps": [
+      "Step 1: Check text on light background contrast ratio",
+      "Step 2: Check text on dark background contrast ratio",
+      "Step 3: Verify all text meets 4.5:1 minimum",
+      "Step 4: Verify large text meets 3:1 minimum",
+      "Step 5: Use contrast checker tool to verify"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Accessibility: Images have alt text",
+    "steps": [
+      "Step 1: Navigate to pages with images",
+      "Step 2: Inspect image elements",
+      "Step 3: Verify alt attributes present",
+      "Step 4: Verify alt text is descriptive",
+      "Step 5: Verify decorative images have empty alt"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Accessibility: Form labels are properly associated",
+    "steps": [
+      "Step 1: Navigate to any form",
+      "Step 2: Inspect form fields",
+      "Step 3: Verify each input has associated label",
+      "Step 4: Verify labels are clickable",
+      "Step 5: Verify labels are visible or properly hidden"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Accessibility: Heading hierarchy is correct",
+    "steps": [
+      "Step 1: Navigate to various pages",
+      "Step 2: Inspect heading structure",
+      "Step 3: Verify single h1 per page",
+      "Step 4: Verify headings don't skip levels",
+      "Step 5: Verify logical heading order"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Print styles are optimized",
+    "steps": [
+      "Step 1: Navigate to blog article",
+      "Step 2: Open print preview",
+      "Step 3: Verify layout adapts for print",
+      "Step 4: Verify no unnecessary elements print",
+      "Step 5: Verify content is readable when printed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Environment variables are properly configured",
+    "steps": [
+      "Step 1: Check for .env file",
+      "Step 2: Verify database path configured",
+      "Step 3: Verify JWT secret configured",
+      "Step 4: Verify email credentials configured",
+      "Step 5: Verify all required env vars present"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Application runs on correct ports",
+    "steps": [
+      "Step 1: Start frontend server",
+      "Step 2: Verify frontend runs on port 5173",
+      "Step 3: Start backend server",
+      "Step 4: Verify backend runs on port 3001",
+      "Step 5: Verify both servers communicate correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "CORS is properly configured",
+    "steps": [
+      "Step 1: Make API request from frontend",
+      "Step 2: Verify no CORS errors",
+      "Step 3: Check browser console",
+      "Step 4: Verify preflight requests succeed",
+      "Step 5: Verify credentials are handled correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Database connection is stable",
+    "steps": [
+      "Step 1: Start backend server",
+      "Step 2: Verify database connection established",
+      "Step 3: Make multiple database queries",
+      "Step 4: Verify no connection errors",
+      "Step 5: Verify connection pool works correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Static files are served correctly",
+    "steps": [
+      "Step 1: Navigate to homepage",
+      "Step 2: Verify all CSS loads",
+      "Step 3: Verify all JavaScript loads",
+      "Step 4: Verify all images load",
+      "Step 5: Check browser console for 404s"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "API error handling returns proper status codes",
+    "steps": [
+      "Step 1: Make request for non-existent resource",
+      "Step 2: Verify 404 status code",
+      "Step 3: Make unauthorized request",
+      "Step 4: Verify 401 status code",
+      "Step 5: Make forbidden request",
+      "Step 6: Verify 403 status code",
+      "Step 7: Make invalid request",
+      "Step 8: Verify 400 status code"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Logging system captures important events",
+    "steps": [
+      "Step 1: Trigger various application events",
+      "Step 2: Check log files",
+      "Step 3: Verify errors are logged",
+      "Step 4: Verify API requests logged",
+      "Step 5: Verify log format is consistent",
+      "Step 6: Verify sensitive data not logged"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Backup system for database works",
+    "steps": [
+      "Step 1: Trigger database backup",
+      "Step 2: Verify backup file created",
+      "Step 3: Verify backup file contains data",
+      "Step 4: Test restore from backup",
+      "Step 5: Verify data integrity after restore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Email templates render correctly",
+    "steps": [
+      "Step 1: Trigger email send (registration, contact, etc)",
+      "Step 2: Check email in inbox or logs",
+      "Step 3: Verify HTML renders correctly",
+      "Step 4: Verify Romanian text displays correctly",
+      "Step 5: Verify links in email work",
+      "Step 6: Verify email is mobile-friendly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Performance: Page load time is under 3 seconds",
+    "steps": [
+      "Step 1: Clear browser cache",
+      "Step 2: Navigate to homepage",
+      "Step 3: Measure page load time",
+      "Step 4: Verify load time under 3 seconds",
+      "Step 5: Test on different pages",
+      "Step 6: Verify all pages load quickly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Performance: API response time is under 500ms",
+    "steps": [
+      "Step 1: Make various API requests",
+      "Step 2: Measure response times",
+      "Step 3: Verify most requests under 500ms",
+      "Step 4: Identify slow queries if any",
+      "Step 5: Verify acceptable performance"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Performance: Images are optimized",
+    "steps": [
+      "Step 1: Navigate to image-heavy pages",
+      "Step 2: Check image file sizes",
+      "Step 3: Verify images are compressed",
+      "Step 4: Verify appropriate image formats used",
+      "Step 5: Verify lazy loading for below-fold images"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SEO: Meta tags are present on all pages",
+    "steps": [
+      "Step 1: Navigate to various pages",
+      "Step 2: View page source",
+      "Step 3: Verify title tag present and descriptive",
+      "Step 4: Verify meta description present",
+      "Step 5: Verify Open Graph tags present",
+      "Step 6: Verify meta tags are unique per page"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SEO: Sitemap.xml is generated and accessible",
+    "steps": [
+      "Step 1: Navigate to /sitemap.xml",
+      "Step 2: Verify sitemap loads",
+      "Step 3: Verify all main pages listed",
+      "Step 4: Verify URLs are absolute",
+      "Step 5: Verify valid XML format"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SEO: Robots.txt is properly configured",
+    "steps": [
+      "Step 1: Navigate to /robots.txt",
+      "Step 2: Verify file loads",
+      "Step 3: Verify allows crawling of public pages",
+      "Step 4: Verify disallows crawling of admin pages",
+      "Step 5: Verify sitemap reference present"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SEO: Canonical URLs are set correctly",
+    "steps": [
+      "Step 1: Navigate to various pages",
+      "Step 2: View page source",
+      "Step 3: Verify canonical link tag present",
+      "Step 4: Verify canonical URL is correct",
+      "Step 5: Verify no duplicate content issues"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SEO: Structured data is implemented",
+    "steps": [
+      "Step 1: Navigate to blog articles",
+      "Step 2: View page source",
+      "Step 3: Verify JSON-LD structured data present",
+      "Step 4: Verify Article schema implemented",
+      "Step 5: Validate with Google's Structured Data Testing Tool"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Analytics tracking is implemented",
+    "steps": [
+      "Step 1: Navigate to various pages",
+      "Step 2: Check for analytics script (GA, Plausible, etc)",
+      "Step 3: Verify page views tracked",
+      "Step 4: Verify events tracked (form submits, clicks)",
+      "Step 5: Verify tracking respects user privacy"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Cookie consent banner works if required",
+    "steps": [
+      "Step 1: Visit site for first time",
+      "Step 2: Verify cookie banner displays",
+      "Step 3: Verify can accept cookies",
+      "Step 4: Verify can reject cookies",
+      "Step 5: Verify preference is saved",
+      "Step 6: Verify banner doesn't show again"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "All external links open in new tab",
+    "steps": [
+      "Step 1: Navigate to pages with external links",
+      "Step 2: Inspect link elements",
+      "Step 3: Verify target='_blank' attribute",
+      "Step 4: Verify rel='noopener noreferrer' present",
+      "Step 5: Click link and verify opens in new tab"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Form autocomplete attributes are set correctly",
+    "steps": [
+      "Step 1: Navigate to forms",
+      "Step 2: Inspect form fields",
+      "Step 3: Verify email fields have autocomplete='email'",
+      "Step 4: Verify name fields have autocomplete='name'",
+      "Step 5: Verify password fields have autocomplete='current-password' or 'new-password'"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Application is accessible via keyboard only",
+    "steps": [
+      "Step 1: Navigate site using only Tab key",
+      "Step 2: Verify can access all interactive elements",
+      "Step 3: Verify can submit forms",
+      "Step 4: Verify can navigate menus",
+      "Step 5: Verify modal dialogs can be closed with Escape",
+      "Step 6: Verify no keyboard traps"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Application works in Chrome",
+    "steps": [
+      "Step 1: Open site in Google Chrome",
+      "Step 2: Navigate through main pages",
+      "Step 3: Test key functionality",
+      "Step 4: Verify no console errors",
+      "Step 5: Verify all features work correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Application works in Firefox",
+    "steps": [
+      "Step 1: Open site in Mozilla Firefox",
+      "Step 2: Navigate through main pages",
+      "Step 3: Test key functionality",
+      "Step 4: Verify no console errors",
+      "Step 5: Verify all features work correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Application works in Safari",
+    "steps": [
+      "Step 1: Open site in Safari",
+      "Step 2: Navigate through main pages",
+      "Step 3: Test key functionality",
+      "Step 4: Verify no console errors",
+      "Step 5: Verify all features work correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Application works on iOS Safari",
+    "steps": [
+      "Step 1: Open site on iPhone in Safari",
+      "Step 2: Navigate through main pages",
+      "Step 3: Test touch interactions",
+      "Step 4: Test forms",
+      "Step 5: Verify layout is correct",
+      "Step 6: Verify no iOS-specific issues"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Application works on Android Chrome",
+    "steps": [
+      "Step 1: Open site on Android in Chrome",
+      "Step 2: Navigate through main pages",
+      "Step 3: Test touch interactions",
+      "Step 4: Test forms",
+      "Step 5: Verify layout is correct",
+      "Step 6: Verify no Android-specific issues"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "README.md contains setup instructions",
+    "steps": [
+      "Step 1: Open README.md file",
+      "Step 2: Verify project description present",
+      "Step 3: Verify setup instructions present",
+      "Step 4: Verify technology stack documented",
+      "Step 5: Verify how to run project documented"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Package.json scripts work correctly",
+    "steps": [
+      "Step 1: Run npm run dev",
+      "Step 2: Verify development server starts",
+      "Step 3: Run npm run build",
+      "Step 4: Verify build completes successfully",
+      "Step 5: Verify all required scripts present"
+    ],
+    "passes": false
+  }
+]
