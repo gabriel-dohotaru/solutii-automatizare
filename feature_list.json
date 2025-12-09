@@ -121,7 +121,7 @@
       "Step 5: Verify recent updates section exists",
       "Step 6: Verify quick actions section exists"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",

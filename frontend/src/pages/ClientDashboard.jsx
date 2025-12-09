@@ -54,49 +54,48 @@ function ClientDashboard() {
   }, []);
 
   const loadClientData = async (user) => {
-    // Mock data for now - in real implementation, this would fetch from API
-    setStats({
-      activeProjects: 2,
-      completedProjects: 5,
-      openTickets: 1,
-      pendingInvoices: 2
-    });
+    try {
+      const token = localStorage.getItem('authToken');
 
-    setRecentProjects([
-      {
-        id: 1,
-        name: 'Modul PrestaShop Personalizat',
-        status: 'in_progress',
-        progress: 65,
-        deadline: '2024-12-20'
-      },
-      {
-        id: 2,
-        name: 'Integrare API Magazin',
-        status: 'in_progress',
-        progress: 30,
-        deadline: '2025-01-15'
-      }
-    ]);
+      // Fetch dashboard data from API
+      const response = await fetch('/api/client/dashboard', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
 
-    setRecentUpdates([
-      {
-        id: 1,
-        projectId: 1,
-        title: 'Modul de plată implementat',
-        message: 'Am finalizat implementarea modulului de plată cu cardul. Testele inițiale arată rezultate bune.',
-        date: '2024-12-08',
-        type: 'progress'
-      },
-      {
-        id: 2,
-        projectId: 1,
-        title: 'Actualizare status',
-        message: 'Proiectul a atins 65% completare. Următorul pas este optimizarea performanței.',
-        date: '2024-12-07',
-        type: 'milestone'
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setStats(data.data.stats);
+          setRecentProjects(data.data.recentProjects);
+          setRecentUpdates(data.data.recentUpdates);
+        }
+      } else {
+        console.error('Failed to fetch dashboard data');
+        // Fallback to mock data if API fails
+        setStats({
+          activeProjects: 0,
+          completedProjects: 0,
+          openTickets: 0,
+          pendingInvoices: 0
+        });
+        setRecentProjects([]);
+        setRecentUpdates([]);
       }
-    ]);
+    } catch (error) {
+      console.error('Error loading client data:', error);
+      // Fallback to mock data if API fails
+      setStats({
+        activeProjects: 0,
+        completedProjects: 0,
+        openTickets: 0,
+        pendingInvoices: 0
+      });
+      setRecentProjects([]);
+      setRecentUpdates([]);
+    }
   };
 
   const handleLogout = () => {

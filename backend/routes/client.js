@@ -10,6 +10,81 @@ const __dirname = path.dirname(__filename);
 const router = express.Router();
 const db = new Database(path.join(__dirname, '..', 'database.db'));
 
+// Get dashboard summary stats for the authenticated client
+router.get('/dashboard', authenticateToken, (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    // Get project stats
+    const activeProjects = db.prepare(`
+      SELECT COUNT(*) as count FROM projects
+      WHERE client_id = ? AND status IN ('in_progress', 'approved')
+    `).get(userId).count;
+
+    const completedProjects = db.prepare(`
+      SELECT COUNT(*) as count FROM projects
+      WHERE client_id = ? AND status = 'completed'
+    `).get(userId).count;
+
+    // Get support tickets stats
+    const openTickets = db.prepare(`
+      SELECT COUNT(*) as count FROM support_tickets
+      WHERE user_id = ? AND status IN ('open', 'in_progress')
+    `).get(userId).count;
+
+    // Get pending invoices count
+    const pendingInvoices = db.prepare(`
+      SELECT COUNT(*) as count FROM invoices
+      WHERE client_id = ? AND status IN ('draft', 'sent')
+    `).get(userId).count;
+
+    // Get recent projects (limit 3)
+    const recentProjects = db.prepare(`
+      SELECT id, name, status, progress, deadline, created_at
+      FROM projects
+      WHERE client_id = ?
+      ORDER BY created_at DESC
+      LIMIT 3
+    `).all(userId);
+
+    // Get recent updates (limit 5)
+    const recentUpdates = db.prepare(`
+      SELECT
+        pu.id,
+        pu.title,
+        pu.content as message,
+        pu.created_at as date,
+        p.name as project_name,
+        'progress' as type
+      FROM project_updates pu
+      JOIN projects p ON pu.project_id = p.id
+      WHERE p.client_id = ? AND pu.is_internal = 0
+      ORDER BY pu.created_at DESC
+      LIMIT 5
+    `).all(userId);
+
+    res.json({
+      success: true,
+      data: {
+        stats: {
+          activeProjects,
+          completedProjects,
+          openTickets,
+          pendingInvoices
+        },
+        recentProjects,
+        recentUpdates
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching dashboard data:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la încărcarea datelor pentru dashboard'
+    });
+  }
+});
+
 // Get all projects for the authenticated client
 router.get('/projects', authenticateToken, (req, res) => {
   try {
