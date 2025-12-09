@@ -16,6 +16,7 @@ import ClientDashboard from './pages/ClientDashboard';
 import ProjectsListPage from './pages/ProjectsListPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import SupportTicketsPage from './pages/SupportTicketsPage';
+import InvoicesPage from './pages/InvoicesPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/client/proiecte" element={<ProjectsListPage />} />
           <Route path="/client/proiecte/:projectId" element={<ProjectDetailPage />} />
           <Route path="/client/suport" element={<SupportTicketsPage />} />
+          <Route path="/client/facturi" element={<InvoicesPage />} />
           {/* Additional routes will be added as pages are created */}
           <Route path="*" element={<NotFound />} />
         </Routes>

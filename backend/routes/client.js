@@ -592,4 +592,70 @@ router.post('/tickets/:id/messages', authenticateToken, (req, res) => {
   }
 });
 
+// Get all invoices for the authenticated client
+router.get('/invoices', authenticateToken, (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const invoices = db.prepare(`
+      SELECT
+        i.*,
+        p.name as project_name,
+        p.id as project_id
+      FROM invoices i
+      LEFT JOIN projects p ON i.project_id = p.id
+      WHERE i.client_id = ?
+      ORDER BY i.created_at DESC
+    `).all(userId);
+
+    res.json({
+      success: true,
+      data: invoices,
+      count: invoices.length
+    });
+  } catch (error) {
+    console.error('Error fetching client invoices:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la încărcarea facturilor'
+    });
+  }
+});
+
+// Get a specific invoice by ID (only if it belongs to the client)
+router.get('/invoices/:id', authenticateToken, (req, res) => {
+  try {
+    const invoiceId = req.params.id;
+    const userId = req.user.userId;
+
+    const invoice = db.prepare(`
+      SELECT
+        i.*,
+        p.name as project_name,
+        p.id as project_id
+      FROM invoices i
+      LEFT JOIN projects p ON i.project_id = p.id
+      WHERE i.id = ? AND i.client_id = ?
+    `).get(invoiceId, userId);
+
+    if (!invoice) {
+      return res.status(404).json({
+        success: false,
+        message: 'Factura nu a fost găsită'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: invoice
+    });
+  } catch (error) {
+    console.error('Error fetching invoice details:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la încărcarea detaliilor facturii'
+    });
+  }
+});
+
 export default router;

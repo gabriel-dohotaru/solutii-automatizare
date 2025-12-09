@@ -205,7 +205,7 @@
       "Step 4: Verify each invoice shows payment status",
       "Step 5: Verify invoice amounts display correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
