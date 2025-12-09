@@ -193,7 +193,7 @@
       "Step 7: Verify file appears in message",
       "Step 8: Verify file saved to server"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",

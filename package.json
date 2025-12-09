@@ -1,0 +1,24 @@
+{
+  "name": "solutii-automatizare-v2",
+  "version": "1.0.0",
+  "description": "Professional website and client portal for a software automation services company specializing in e-commerce modules, software automation, bug fixing, and custom web development.",
+  "main": "start-frontend.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel-dohotaru/solutii-automatizare.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/gabriel-dohotaru/solutii-automatizare/issues"
+  },
+  "homepage": "https://github.com/gabriel-dohotaru/solutii-automatizare#readme",
+  "dependencies": {
+    "puppeteer": "^24.32.1"
+  }
+}

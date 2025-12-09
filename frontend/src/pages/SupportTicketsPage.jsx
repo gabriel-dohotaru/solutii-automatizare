@@ -138,8 +138,8 @@ const SupportTicketsPage = () => {
 
       const data = await response.json();
       if (data.success) {
-        setTicketDetail(data.ticket);
-        setTicketMessages(data.messages || []);
+        setTicketDetail(data.data);
+        setTicketMessages(data.data.messages || []);
         setShowTicketDetail(true);
       } else {
         setError(data.message || 'Eroare la încărcarea detaliilor tichetului');

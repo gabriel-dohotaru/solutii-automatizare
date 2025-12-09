@@ -25,8 +25,8 @@ async function runVerificationTest() {
 
     console.log('Step 3: Login with test credentials...');
     await page.waitForSelector('input[type="email"]', { timeout: 5000 });
-    await page.type('input[type="email"]', 'ion.popescu@test.com');
-    await page.type('input[type="password"]', 'password123');
+    await page.type('input[type="email"]', 'client@test.ro');
+    await page.type('input[type="password"]', 'client123');
     await page.screenshot({ path: 'verification-login-filled.png', fullPage: true });
 
     await page.click('button[type="submit"]');

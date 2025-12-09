@@ -36,9 +36,11 @@ const upload = multer({
   },
   fileFilter: (req, file, cb) => {
     // Allow common file types
-    const allowedTypes = /jpeg|jpg|png|gif|pdf|doc|docx|txt|zip/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = allowedTypes.test(file.mimetype);
+    const allowedExtensions = /\.(jpeg|jpg|png|gif|pdf|doc|docx|txt|zip)$/i;
+    const allowedMimeTypes = /^(image\/(jpeg|png|gif)|application\/(pdf|msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document|zip)|text\/plain)$/;
+
+    const extname = allowedExtensions.test(file.originalname.toLowerCase());
+    const mimetype = allowedMimeTypes.test(file.mimetype);
 
     if (extname && mimetype) {
       return cb(null, true);
@@ -575,6 +577,13 @@ router.post('/tickets/:id/messages', authenticateToken, upload.array('files', 5)
     const userId = req.user.userId;
     const { message } = req.body;
     const files = req.files || [];
+
+    // Debug logging
+    console.log('=== Ticket Message POST Debug ===');
+    console.log('req.body:', req.body);
+    console.log('message:', message);
+    console.log('files:', files.length);
+    console.log('================================');
 
     // Validate required fields
     if (!message || message.trim() === '') {
