@@ -14,6 +14,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ClientDashboard from './pages/ClientDashboard';
 import ProjectsListPage from './pages/ProjectsListPage';
+import SupportTicketsPage from './pages/SupportTicketsPage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/client" element={<ClientDashboard />} />
           <Route path="/client/proiecte" element={<ProjectsListPage />} />
+          <Route path="/client/suport" element={<SupportTicketsPage />} />
           {/* Additional routes will be added as pages are created */}
           <Route path="*" element={<NotFound />} />
         </Routes>

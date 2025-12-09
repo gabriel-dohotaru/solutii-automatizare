@@ -164,7 +164,7 @@
       "Step 8: Verify ticket appears in list",
       "Step 9: Verify ticket saved in database"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",

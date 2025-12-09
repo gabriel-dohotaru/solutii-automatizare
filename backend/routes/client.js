@@ -237,4 +237,226 @@ router.get('/projects/:id/files', authenticateToken, (req, res) => {
   }
 });
 
+// Support Tickets endpoints
+
+// Get all support tickets for the authenticated client
+router.get('/tickets', authenticateToken, (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const tickets = db.prepare(`
+      SELECT
+        st.*,
+        p.name as project_name,
+        p.id as project_id
+      FROM support_tickets st
+      LEFT JOIN projects p ON st.project_id = p.id
+      WHERE st.user_id = ?
+      ORDER BY st.created_at DESC
+    `).all(userId);
+
+    res.json({
+      success: true,
+      data: tickets,
+      count: tickets.length
+    });
+  } catch (error) {
+    console.error('Error fetching support tickets:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la încărcarea tichetelor de suport'
+    });
+  }
+});
+
+// Create a new support ticket
+router.post('/tickets', authenticateToken, (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { subject, project_id, message, priority = 'medium' } = req.body;
+
+    // Validate required fields
+    if (!subject || !message) {
+      return res.status(400).json({
+        success: false,
+        message: 'Subiectul și mesajul sunt obligatorii'
+      });
+    }
+
+    // Validate priority
+    const validPriorities = ['low', 'medium', 'high', 'urgent'];
+    if (!validPriorities.includes(priority)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Prioritatea nu este validă'
+      });
+    }
+
+    // If project_id is provided, verify it belongs to the client
+    if (project_id) {
+      const project = db.prepare('SELECT id FROM projects WHERE id = ? AND client_id = ?')
+        .get(project_id, userId);
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Proiectul selectat nu a fost găsit'
+        });
+      }
+    }
+
+    // Create the support ticket
+    const result = db.prepare(`
+      INSERT INTO support_tickets (user_id, project_id, subject, status, priority, created_at, updated_at)
+      VALUES (?, ?, ?, 'open', ?, datetime('now'), datetime('now'))
+    `).run(userId, project_id || null, subject, priority);
+
+    const ticketId = result.lastInsertRowid;
+
+    // Create the initial message
+    db.prepare(`
+      INSERT INTO ticket_messages (ticket_id, user_id, message, is_internal, created_at)
+      VALUES (?, ?, ?, 0, datetime('now'))
+    `).run(ticketId, userId, message);
+
+    // Get the created ticket with project info
+    const createdTicket = db.prepare(`
+      SELECT
+        st.*,
+        p.name as project_name,
+        p.id as project_id
+      FROM support_tickets st
+      LEFT JOIN projects p ON st.project_id = p.id
+      WHERE st.id = ?
+    `).get(ticketId);
+
+    res.status(201).json({
+      success: true,
+      message: 'Tichet de suport creat cu succes',
+      data: createdTicket
+    });
+  } catch (error) {
+    console.error('Error creating support ticket:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la crearea tichetului de suport'
+    });
+  }
+});
+
+// Get a specific support ticket with messages
+router.get('/tickets/:id', authenticateToken, (req, res) => {
+  try {
+    const ticketId = req.params.id;
+    const userId = req.user.userId;
+
+    // Get the ticket (only if it belongs to the client)
+    const ticket = db.prepare(`
+      SELECT
+        st.*,
+        p.name as project_name,
+        p.id as project_id
+      FROM support_tickets st
+      LEFT JOIN projects p ON st.project_id = p.id
+      WHERE st.id = ? AND st.user_id = ?
+    `).get(ticketId, userId);
+
+    if (!ticket) {
+      return res.status(404).json({
+        success: false,
+        message: 'Tichetul de suport nu a fost găsit'
+      });
+    }
+
+    // Get ticket messages
+    const messages = db.prepare(`
+      SELECT
+        tm.*,
+        u.first_name,
+        u.last_name,
+        u.role
+      FROM ticket_messages tm
+      JOIN users u ON tm.user_id = u.id
+      WHERE tm.ticket_id = ?
+      ORDER BY tm.created_at ASC
+    `).all(ticketId);
+
+    res.json({
+      success: true,
+      data: {
+        ...ticket,
+        messages
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching support ticket details:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la încărcarea detaliilor tichetului'
+    });
+  }
+});
+
+// Add a message to a support ticket
+router.post('/tickets/:id/messages', authenticateToken, (req, res) => {
+  try {
+    const ticketId = req.params.id;
+    const userId = req.user.userId;
+    const { message } = req.body;
+
+    // Validate required fields
+    if (!message || message.trim() === '') {
+      return res.status(400).json({
+        success: false,
+        message: 'Mesajul nu poate fi gol'
+      });
+    }
+
+    // Verify ticket belongs to client
+    const ticket = db.prepare('SELECT id FROM support_tickets WHERE id = ? AND user_id = ?')
+      .get(ticketId, userId);
+
+    if (!ticket) {
+      return res.status(404).json({
+        success: false,
+        message: 'Tichetul de suport nu a fost găsit'
+      });
+    }
+
+    // Insert the message
+    const result = db.prepare(`
+      INSERT INTO ticket_messages (ticket_id, user_id, message, is_internal, created_at)
+      VALUES (?, ?, ?, 0, datetime('now'))
+    `).run(ticketId, userId, message);
+
+    // Update ticket's updated_at timestamp
+    db.prepare('UPDATE support_tickets SET updated_at = datetime("now") WHERE id = ?')
+      .run(ticketId);
+
+    // Get the created message with user info
+    const createdMessage = db.prepare(`
+      SELECT
+        tm.*,
+        u.first_name,
+        u.last_name,
+        u.role
+      FROM ticket_messages tm
+      JOIN users u ON tm.user_id = u.id
+      WHERE tm.id = ?
+    `).get(result.lastInsertRowid);
+
+    res.status(201).json({
+      success: true,
+      message: 'Mesaj adăugat cu succes',
+      data: createdMessage
+    });
+  } catch (error) {
+    console.error('Error adding message to support ticket:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la adăugarea mesajului'
+    });
+  }
+});
+
 export default router;
