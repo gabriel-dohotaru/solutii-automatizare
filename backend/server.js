@@ -64,7 +64,7 @@ app.get('/api', (req, res) => {
 // Import routes (these will be created progressively)
 import authRoutes from './routes/auth.js';
 import servicesRoutes from './routes/services.js';
-// import packagesRoutes from './routes/packages.js';
+import packagesRoutes from './routes/packages.js';
 // import portfolioRoutes from './routes/portfolio.js';
 // import blogRoutes from './routes/blog.js';
 import contactRoutes from './routes/contact.js';
@@ -75,7 +75,7 @@ import clientRoutes from './routes/client.js';
 // Use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/services', servicesRoutes);
-// app.use('/api/packages', packagesRoutes);
+app.use('/api/packages', packagesRoutes);
 // app.use('/api/portfolio', portfolioRoutes);
 // app.use('/api/blog', blogRoutes);
 app.use('/api/contact', contactRoutes);

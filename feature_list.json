@@ -328,7 +328,7 @@
       "Step 4: Verify features array is included",
       "Step 5: Verify full description is present"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
@@ -342,7 +342,7 @@
       "Step 6: Verify pricing information is visible",
       "Step 7: Verify add-ons section exists"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
@@ -354,7 +354,7 @@
       "Step 4: Verify each package has name, price, features",
       "Step 5: Verify popular package is marked"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
