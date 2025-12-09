@@ -4,9 +4,13 @@ import jwt from 'jsonwebtoken';
 import { body, validationResult } from 'express-validator';
 import Database from 'better-sqlite3';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
-const db = new Database(path.join(process.cwd(), 'database.db'));
+const db = new Database(path.join(__dirname, '..', 'database.db'));
 
 // JWT Secret (should be in environment variables in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';

@@ -12,7 +12,7 @@ import QuoteRequestPage from './pages/QuoteRequestPage';
 // import AboutPage from './pages/AboutPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-// import ClientDashboard from './pages/client/Dashboard';
+import ClientDashboard from './pages/ClientDashboard';
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
           <Route path="/solicita-oferta" element={<QuoteRequestPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/client" element={<ClientDashboard />} />
           {/* Additional routes will be added as pages are created */}
           <Route path="*" element={<NotFound />} />
         </Routes>
