@@ -68,6 +68,7 @@ app.get('/api', (req, res) => {
 // import portfolioRoutes from './routes/portfolio.js';
 // import blogRoutes from './routes/blog.js';
 import contactRoutes from './routes/contact.js';
+import quoteRoutes from './routes/quote.js';
 // import clientRoutes from './routes/client.js';
 // import adminRoutes from './routes/admin.js';
 
@@ -78,6 +79,7 @@ import contactRoutes from './routes/contact.js';
 // app.use('/api/portfolio', portfolioRoutes);
 // app.use('/api/blog', blogRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api', quoteRoutes);
 // app.use('/api/client', clientRoutes);
 // app.use('/api/admin', adminRoutes);
 

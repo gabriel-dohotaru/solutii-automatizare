@@ -13,7 +13,7 @@
       "Step 8: Verify CTA banner is visible",
       "Step 9: Verify footer with contact info is present"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
@@ -31,7 +31,7 @@
       "Step 10: Click on 'Contact' menu item",
       "Step 11: Verify navigation to /contact"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
@@ -48,7 +48,7 @@
       "Step 9: Verify success message appears",
       "Step 10: Verify form data is saved in database"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",

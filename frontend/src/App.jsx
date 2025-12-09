@@ -8,7 +8,7 @@ import ContactPage from './pages/ContactPage';
 import PackagesPage from './pages/PackagesPage';
 import PortfolioPage from './pages/PortfolioPage';
 import BlogPage from './pages/BlogPage';
-// import QuoteRequestPage from './pages/QuoteRequestPage';
+import QuoteRequestPage from './pages/QuoteRequestPage';
 // import AboutPage from './pages/AboutPage';
 // import LoginPage from './pages/LoginPage';
 // import RegisterPage from './pages/RegisterPage';
@@ -25,6 +25,7 @@ function App() {
           <Route path="/portofoliu" element={<PortfolioPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/solicita-oferta" element={<QuoteRequestPage />} />
           {/* Additional routes will be added as pages are created */}
           <Route path="*" element={<NotFound />} />
         </Routes>
