@@ -5,6 +5,7 @@ import { body, validationResult } from 'express-validator';
 import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
+// Updated: Profile update endpoint added
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -201,6 +202,103 @@ router.get('/me', authenticateToken, (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Eroare la obținerea datelor'
+    });
+  }
+});
+
+// Update profile (protected route)
+router.put('/profile', [
+  authenticateToken,
+  body('firstName').optional().notEmpty().withMessage('Prenumele nu poate fi gol'),
+  body('lastName').optional().notEmpty().withMessage('Numele nu poate fi gol'),
+  body('phone').optional().isMobilePhone('ro-RO').withMessage('Număr de telefon invalid'),
+  body('company').optional()
+], async (req, res) => {
+  try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Date invalide',
+        errors: errors.array()
+      });
+    }
+
+    const { firstName, lastName, phone, company } = req.body;
+    const userId = req.user.userId;
+
+    // Build dynamic update query
+    const updateFields = [];
+    const updateValues = [];
+
+    if (firstName !== undefined) {
+      updateFields.push('first_name = ?');
+      updateValues.push(firstName);
+    }
+    if (lastName !== undefined) {
+      updateFields.push('last_name = ?');
+      updateValues.push(lastName);
+    }
+    if (phone !== undefined) {
+      updateFields.push('phone = ?');
+      updateValues.push(phone || null);
+    }
+    if (company !== undefined) {
+      updateFields.push('company_name = ?');
+      updateValues.push(company || null);
+    }
+
+    // Always update the updated_at timestamp
+    updateFields.push('updated_at = datetime(\'now\')');
+
+    if (updateFields.length === 1) {
+      // Only updated_at would be updated, no actual changes
+      return res.status(400).json({
+        success: false,
+        message: 'Nicio modificare detectată'
+      });
+    }
+
+    // Add userId to values array
+    updateValues.push(userId);
+
+    // Execute update
+    const query = `UPDATE users SET ${updateFields.join(', ')} WHERE id = ?`;
+    const result = db.prepare(query).run(...updateValues);
+
+    if (result.changes === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Utilizator negăsit'
+      });
+    }
+
+    // Fetch updated user data
+    const updatedUser = db.prepare(`
+      SELECT id, email, first_name, last_name, phone, company_name, role, email_verified, created_at, updated_at
+      FROM users
+      WHERE id = ?
+    `).get(userId);
+
+    // Map company_name to company for API consistency
+    const { company_name, ...userWithoutCompanyName } = updatedUser;
+    const userResponse = {
+      ...userWithoutCompanyName,
+      company: company_name
+    };
+
+    res.json({
+      success: true,
+      message: 'Profil actualizat cu succes',
+      data: { user: userResponse }
+    });
+
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la actualizarea profilului'
     });
   }
 });
