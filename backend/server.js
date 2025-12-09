@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3005;
 
 // Security middleware
 app.use(helmet());
@@ -107,7 +107,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log('');
   console.log('================================================');
-  console.log(`🚀 Soluții Automatizare Backend API`);
+  console.log(`🚀 Soluții Automatizare Backend API - Updated`);
   console.log('================================================');
   console.log(`   Port: ${PORT}`);
   console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);

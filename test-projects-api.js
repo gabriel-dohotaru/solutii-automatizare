@@ -1,5 +1,5 @@
 
-const API_BASE = 'http://localhost:3002';
+const API_BASE = 'http://localhost:3005';
 
 async function testProjectsAPI() {
   try {
