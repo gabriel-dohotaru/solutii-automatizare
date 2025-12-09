@@ -130,9 +130,8 @@ function ProjectsListPage() {
   });
 
   const handleProjectClick = (projectId) => {
-    // Navigate to project details page (to be implemented)
-    console.log('Navigate to project:', projectId);
-    // navigate(`/client/proiecte/${projectId}`);
+    // Navigate to project details page
+    navigate(`/client/proiecte/${projectId}`);
   };
 
   if (loading) {

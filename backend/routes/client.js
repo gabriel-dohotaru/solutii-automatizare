@@ -312,6 +312,64 @@ router.get('/projects/:id/files', authenticateToken, (req, res) => {
   }
 });
 
+// Add a project update (client can add comments/updates)
+router.post('/projects/:id/updates', authenticateToken, (req, res) => {
+  try {
+    const projectId = req.params.id;
+    const userId = req.user.userId;
+    const { title, content } = req.body;
+
+    // Validate required fields
+    if (!title || !content) {
+      return res.status(400).json({
+        success: false,
+        message: 'Titlul și conținutul sunt obligatorii'
+      });
+    }
+
+    // Verify project belongs to client
+    const project = db.prepare('SELECT id FROM projects WHERE id = ? AND client_id = ?')
+      .get(projectId, userId);
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: 'Proiectul nu a fost găsit'
+      });
+    }
+
+    // Insert the project update
+    const result = db.prepare(`
+      INSERT INTO project_updates (project_id, user_id, title, content, is_internal, created_at)
+      VALUES (?, ?, ?, ?, 0, datetime('now'))
+    `).run(projectId, userId, title, content);
+
+    // Get the created update with user info
+    const createdUpdate = db.prepare(`
+      SELECT
+        pu.*,
+        u.first_name,
+        u.last_name,
+        u.role
+      FROM project_updates pu
+      JOIN users u ON pu.user_id = u.id
+      WHERE pu.id = ?
+    `).get(result.lastInsertRowid);
+
+    res.status(201).json({
+      success: true,
+      message: 'Actualizare adăugată cu succes',
+      data: createdUpdate
+    });
+  } catch (error) {
+    console.error('Error adding project update:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la adăugarea actualizării'
+    });
+  }
+});
+
 // Support Tickets endpoints
 
 // Get all support tickets for the authenticated client

@@ -72,7 +72,7 @@ function QuoteRequestPage() {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('http://localhost:3001/api/quote-request', {
+      const response = await fetch('/api/quote-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
