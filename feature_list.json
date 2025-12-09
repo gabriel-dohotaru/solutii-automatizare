@@ -304,7 +304,7 @@
       "Step 6: Verify process timeline section exists",
       "Step 7: Verify FAQ accordion exists"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
@@ -316,7 +316,7 @@
       "Step 4: Verify each service has required fields (name, category, description)",
       "Step 5: Verify services are ordered by order_index"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
