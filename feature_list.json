@@ -67,7 +67,7 @@
       "Step 11: Verify success message",
       "Step 12: Verify data saved in database"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
