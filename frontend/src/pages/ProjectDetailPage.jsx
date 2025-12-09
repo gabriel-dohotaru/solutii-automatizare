@@ -33,7 +33,7 @@ function ProjectDetailPage() {
   useEffect(() => {
     // Get user data from localStorage
     const userData = localStorage.getItem('user');
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
 
     if (!userData || !token) {
       window.location.href = '/login';
@@ -85,7 +85,7 @@ function ProjectDetailPage() {
 
     setSubmittingComment(true);
     try {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('token');
       const response = await fetch(`/api/client/projects/${projectId}/updates`, {
         method: 'POST',
         headers: {

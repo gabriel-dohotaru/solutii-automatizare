@@ -26,7 +26,7 @@ function ProjectsListPage() {
   useEffect(() => {
     // Get user data from localStorage
     const userData = localStorage.getItem('user');
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
 
     if (!userData || !token) {
       // Redirect to login if not authenticated
@@ -48,7 +48,7 @@ function ProjectsListPage() {
 
   const loadProjects = async (user) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('token');
       const response = await fetch('/api/client/projects', {
         headers: {
           'Authorization': `Bearer ${token}`,

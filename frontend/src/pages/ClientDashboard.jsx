@@ -31,7 +31,7 @@ function ClientDashboard() {
   useEffect(() => {
     // Get user data from localStorage
     const userData = localStorage.getItem('user');
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
 
     if (!userData || !token) {
       // Redirect to login if not authenticated
@@ -55,7 +55,7 @@ function ClientDashboard() {
 
   const loadClientData = async (user) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('token');
 
       // Fetch dashboard data from API
       const response = await fetch('/api/client/dashboard', {

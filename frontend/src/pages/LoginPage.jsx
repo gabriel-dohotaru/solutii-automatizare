@@ -74,7 +74,7 @@ function LoginPage() {
         setSubmitStatus('success');
 
         // Store token and user data in localStorage
-        localStorage.setItem('authToken', data.data.token);
+        localStorage.setItem('token', data.data.token);
         localStorage.setItem('user', JSON.stringify(data.data.user));
 
         // Redirect to dashboard after a delay
