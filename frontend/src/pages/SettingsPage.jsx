@@ -9,7 +9,8 @@ import {
   LogOut,
   Save,
   AlertCircle,
-  CheckCircle
+  CheckCircle,
+  Lock
 } from 'lucide-react';
 
 function SettingsPage() {
@@ -17,6 +18,15 @@ function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
+
+  // Password change state
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(null);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
   // Form state
   const [formData, setFormData] = useState({
@@ -114,6 +124,61 @@ function SettingsPage() {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    setChangingPassword(true);
+    setPasswordMessage(null);
+
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch('/api/auth/password', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(passwordData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setPasswordMessage({
+          type: 'success',
+          text: data.message || 'Parolă schimbată cu succes!'
+        });
+        // Clear password fields
+        setPasswordData({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        });
+      } else {
+        setPasswordMessage({
+          type: 'error',
+          text: data.message || 'Eroare la schimbarea parolei'
+        });
+      }
+    } catch (error) {
+      console.error('Change password error:', error);
+      setPasswordMessage({
+        type: 'error',
+        text: 'Eroare de conexiune. Vă rugăm încercați din nou.'
+      });
+    } finally {
+      setChangingPassword(false);
+    }
+  };
+
+  const handlePasswordInputChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleLogout = () => {
@@ -335,6 +400,104 @@ function SettingsPage() {
               >
                 <Save className="w-5 h-5 mr-2" />
                 {saving ? 'Se salvează...' : 'Salvează Modificările'}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Password Change Section */}
+        <div className="bg-white rounded-lg shadow-sm border p-6 md:p-8 mt-6">
+          <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+            <Lock className="w-5 h-5 mr-2" />
+            Schimbă Parola
+          </h2>
+
+          {/* Password Success/Error Message */}
+          {passwordMessage && (
+            <div className={`mb-6 p-4 rounded-lg flex items-start ${
+              passwordMessage.type === 'success'
+                ? 'bg-green-50 border border-green-200'
+                : 'bg-red-50 border border-red-200'
+            }`}>
+              {passwordMessage.type === 'success' ? (
+                <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5" />
+              ) : (
+                <AlertCircle className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
+              )}
+              <p className={`text-sm ${
+                passwordMessage.type === 'success' ? 'text-green-800' : 'text-red-800'
+              }`}>
+                {passwordMessage.text}
+              </p>
+            </div>
+          )}
+
+          <form onSubmit={handlePasswordChange} className="space-y-6">
+            {/* Current Password */}
+            <div>
+              <label htmlFor="currentPassword" className="block text-sm font-medium text-slate-700 mb-2">
+                Parola Curentă *
+              </label>
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                value={passwordData.currentPassword}
+                onChange={handlePasswordInputChange}
+                required
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="Introdu parola curentă"
+              />
+            </div>
+
+            {/* New Password */}
+            <div>
+              <label htmlFor="newPassword" className="block text-sm font-medium text-slate-700 mb-2">
+                Parolă Nouă *
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                value={passwordData.newPassword}
+                onChange={handlePasswordInputChange}
+                required
+                minLength="6"
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="Minim 6 caractere"
+              />
+              <p className="text-xs text-slate-500 mt-1">
+                Parola trebuie să conțină minim 6 caractere
+              </p>
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-2">
+                Confirmă Parola Nouă *
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={passwordData.confirmPassword}
+                onChange={handlePasswordInputChange}
+                required
+                minLength="6"
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="Re-introdu parola nouă"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex items-center justify-end pt-4 border-t">
+              <button
+                type="submit"
+                disabled={changingPassword}
+                className="flex items-center px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed"
+              >
+                <Lock className="w-5 h-5 mr-2" />
+                {changingPassword ? 'Se schimbă...' : 'Schimbă Parola'}
               </button>
             </div>
           </form>

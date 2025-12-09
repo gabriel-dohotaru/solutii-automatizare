@@ -303,6 +303,86 @@ router.put('/profile', [
   }
 });
 
+// Change password (protected route)
+router.put('/password', [
+  authenticateToken,
+  body('currentPassword').notEmpty().withMessage('Parola curentă este obligatorie'),
+  body('newPassword').isLength({ min: 6 }).withMessage('Parola nouă trebuie să aibă minim 6 caractere'),
+  body('confirmPassword').notEmpty().withMessage('Confirmarea parolei este obligatorie')
+], async (req, res) => {
+  try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Date invalide',
+        errors: errors.array()
+      });
+    }
+
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    const userId = req.user.userId;
+
+    // Check if new passwords match
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Parolele noi nu corespund'
+      });
+    }
+
+    // Get user's current password hash
+    const user = db.prepare('SELECT password_hash FROM users WHERE id = ?').get(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'Utilizator negăsit'
+      });
+    }
+
+    // Verify current password
+    const isValidPassword = await bcrypt.compare(currentPassword, user.password_hash);
+    if (!isValidPassword) {
+      return res.status(401).json({
+        success: false,
+        message: 'Parola curentă este incorectă'
+      });
+    }
+
+    // Hash new password
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // Update password in database
+    const result = db.prepare(`
+      UPDATE users
+      SET password_hash = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).run(hashedPassword, userId);
+
+    if (result.changes === 0) {
+      return res.status(500).json({
+        success: false,
+        message: 'Eroare la actualizarea parolei'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Parolă schimbată cu succes'
+    });
+
+  } catch (error) {
+    console.error('Change password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la schimbarea parolei'
+    });
+  }
+});
+
 // Middleware to authenticate JWT token
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];

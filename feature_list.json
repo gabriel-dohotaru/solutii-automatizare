@@ -247,7 +247,7 @@
       "Step 8: Verify success message",
       "Step 9: Verify can login with new password"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
