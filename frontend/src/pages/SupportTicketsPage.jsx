@@ -13,7 +13,11 @@ import {
   Tag,
   Send,
   ArrowLeft,
-  Reply
+  Reply,
+  Paperclip,
+  X,
+  FileText,
+  Download
 } from 'lucide-react';
 
 const SupportTicketsPage = () => {
@@ -27,6 +31,7 @@ const SupportTicketsPage = () => {
   const [showTicketDetail, setShowTicketDetail] = useState(false);
   const [replyMessage, setReplyMessage] = useState('');
   const [replyLoading, setReplyLoading] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [projects, setProjects] = useState([]);
   const [formData, setFormData] = useState({
     subject: '',
@@ -167,13 +172,23 @@ const SupportTicketsPage = () => {
     setReplyLoading(true);
     try {
       const token = localStorage.getItem('token');
+
+      // Create FormData to handle file uploads
+      const formData = new FormData();
+      formData.append('message', replyMessage.trim());
+
+      // Append files if any
+      selectedFiles.forEach(file => {
+        formData.append('files', file);
+      });
+
       const response = await fetch(`/api/client/tickets/${ticketDetail.id}/messages`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
+          // Note: Don't set Content-Type header for FormData, browser will set it automatically with boundary
         },
-        body: JSON.stringify({ message: replyMessage.trim() })
+        body: formData
       });
 
       const data = await response.json();
@@ -181,6 +196,7 @@ const SupportTicketsPage = () => {
         // Add the new message to the messages list
         setTicketMessages(prev => [...prev, data.data]);
         setReplyMessage('');
+        setSelectedFiles([]);
 
         // Update ticket's updated_at timestamp
         setTicketDetail(prev => ({
@@ -195,6 +211,32 @@ const SupportTicketsPage = () => {
     } finally {
       setReplyLoading(false);
     }
+  };
+
+  // Handle file selection
+  const handleFileSelect = (e) => {
+    const files = Array.from(e.target.files);
+    // Validate file size (10MB max per file)
+    const validFiles = files.filter(file => {
+      if (file.size > 10 * 1024 * 1024) {
+        setError(`Fișierul "${file.name}" este prea mare. Dimensiunea maximă este 10MB.`);
+        return false;
+      }
+      return true;
+    });
+    setSelectedFiles(prev => [...prev, ...validFiles].slice(0, 5)); // Max 5 files
+  };
+
+  // Handle file removal
+  const handleFileRemove = (index) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Format file size for display
+  const formatFileSize = (bytes) => {
+    if (bytes < 1024) return bytes + ' B';
+    else if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    else return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
   const handleSubmit = async (e) => {
@@ -341,6 +383,30 @@ const SupportTicketsPage = () => {
                       </span>
                     </div>
                     <p className="text-sm whitespace-pre-wrap">{message.message}</p>
+
+                    {/* Display attachments if present */}
+                    {message.attachments && JSON.parse(message.attachments).length > 0 && (
+                      <div className="mt-2 space-y-1">
+                        {JSON.parse(message.attachments).map((attachment, idx) => (
+                          <a
+                            key={idx}
+                            href={`/api/client/tickets/attachments/${attachment.filename}`}
+                            download={attachment.originalName}
+                            className={`inline-flex items-center space-x-2 px-3 py-1 rounded text-xs ${
+                              message.role === 'admin'
+                                ? 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+                                : 'bg-blue-600 text-white hover:bg-blue-700'
+                            } transition-colors`}
+                          >
+                            <Download className="h-3 w-3" />
+                            <span>{attachment.originalName}</span>
+                            <span className="opacity-75">
+                              ({formatFileSize(attachment.size)})
+                            </span>
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -370,26 +436,80 @@ const SupportTicketsPage = () => {
                 />
               </div>
 
-              <div className="flex justify-end space-x-3">
-                <button
-                  type="button"
-                  onClick={() => setReplyMessage('')}
-                  className="px-4 py-2 text-slate-600 hover:text-slate-800 transition-colors"
-                >
-                  Anulează
-                </button>
-                <button
-                  type="submit"
-                  disabled={!replyMessage.trim() || replyLoading}
-                  className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  {replyLoading ? (
-                    <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  ) : (
-                    <Send className="h-4 w-4 mr-2" />
-                  )}
-                  Trimite răspuns
-                </button>
+              {/* File Attachments */}
+              {selectedFiles.length > 0 && (
+                <div className="mb-4">
+                  <div className="text-sm font-medium text-slate-700 mb-2">
+                    Fișiere atașate ({selectedFiles.length}/5):
+                  </div>
+                  <div className="space-y-2">
+                    {selectedFiles.map((file, index) => (
+                      <div key={index} className="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-lg">
+                        <div className="flex items-center space-x-2">
+                          <FileText className="h-4 w-4 text-slate-400" />
+                          <span className="text-sm text-slate-700">{file.name}</span>
+                          <span className="text-xs text-slate-500">({formatFileSize(file.size)})</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleFileRemove(index)}
+                          className="text-slate-400 hover:text-red-500 transition-colors"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <label
+                    htmlFor="file-upload"
+                    className="inline-flex items-center px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 cursor-pointer transition-colors"
+                  >
+                    <Paperclip className="h-4 w-4 mr-2" />
+                    Atașează fișier
+                  </label>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    multiple
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt,.zip"
+                    disabled={selectedFiles.length >= 5}
+                  />
+                  <span className="text-xs text-slate-500">
+                    Max 5 fișiere, 10MB/fișier
+                  </span>
+                </div>
+
+                <div className="flex space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setReplyMessage('');
+                      setSelectedFiles([]);
+                    }}
+                    className="px-4 py-2 text-slate-600 hover:text-slate-800 transition-colors"
+                  >
+                    Anulează
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={!replyMessage.trim() || replyLoading}
+                    className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {replyLoading ? (
+                      <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    ) : (
+                      <Send className="h-4 w-4 mr-2" />
+                    )}
+                    Trimite răspuns
+                  </button>
+                </div>
               </div>
             </form>
           </div>

@@ -2,6 +2,8 @@ import express from 'express';
 import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import multer from 'multer';
+import fs from 'fs';
 import { authenticateToken } from '../middleware/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -9,6 +11,42 @@ const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 const db = new Database(path.join(__dirname, '..', 'database.db'));
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, '..', 'uploads', 'tickets');
+    // Ensure directory exists
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    // Generate unique filename: timestamp-random-originalname
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB max file size
+  },
+  fileFilter: (req, file, cb) => {
+    // Allow common file types
+    const allowedTypes = /jpeg|jpg|png|gif|pdf|doc|docx|txt|zip/;
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedTypes.test(file.mimetype);
+
+    if (extname && mimetype) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Tip de fișier neacceptat. Doar imagini, PDF, DOC și ZIP sunt permise.'));
+    }
+  }
+});
 
 // Get dashboard summary stats for the authenticated client
 router.get('/dashboard', authenticateToken, (req, res) => {
@@ -530,12 +568,13 @@ router.get('/tickets/:id', authenticateToken, (req, res) => {
   }
 });
 
-// Add a message to a support ticket
-router.post('/tickets/:id/messages', authenticateToken, (req, res) => {
+// Add a message to a support ticket (with optional file attachments)
+router.post('/tickets/:id/messages', authenticateToken, upload.array('files', 5), (req, res) => {
   try {
     const ticketId = req.params.id;
     const userId = req.user.userId;
     const { message } = req.body;
+    const files = req.files || [];
 
     // Validate required fields
     if (!message || message.trim() === '') {
@@ -556,11 +595,23 @@ router.post('/tickets/:id/messages', authenticateToken, (req, res) => {
       });
     }
 
-    // Insert the message
+    // Prepare attachments data if files were uploaded
+    let attachments = null;
+    if (files.length > 0) {
+      attachments = JSON.stringify(files.map(file => ({
+        filename: file.filename,
+        originalName: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size,
+        path: path.join('uploads', 'tickets', file.filename)
+      })));
+    }
+
+    // Insert the message with attachments
     const result = db.prepare(`
-      INSERT INTO ticket_messages (ticket_id, user_id, message, is_internal, created_at)
-      VALUES (?, ?, ?, 0, datetime('now'))
-    `).run(ticketId, userId, message);
+      INSERT INTO ticket_messages (ticket_id, user_id, message, attachments, is_internal, created_at)
+      VALUES (?, ?, ?, ?, 0, datetime('now'))
+    `).run(ticketId, userId, message, attachments);
 
     // Update ticket's updated_at timestamp
     db.prepare("UPDATE support_tickets SET updated_at = datetime('now') WHERE id = ?")
@@ -580,14 +631,47 @@ router.post('/tickets/:id/messages', authenticateToken, (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Mesaj adăugat cu succes',
+      message: files.length > 0
+        ? `Mesaj adăugat cu succes cu ${files.length} fișier(e) atașat(e)`
+        : 'Mesaj adăugat cu succes',
       data: createdMessage
     });
   } catch (error) {
     console.error('Error adding message to support ticket:', error);
+    // Clean up uploaded files if there was an error
+    if (req.files) {
+      req.files.forEach(file => {
+        fs.unlinkSync(file.path);
+      });
+    }
     res.status(500).json({
       success: false,
       message: 'Eroare la adăugarea mesajului'
+    });
+  }
+});
+
+// Download/serve ticket attachment file
+router.get('/tickets/attachments/:filename', authenticateToken, (req, res) => {
+  try {
+    const filename = req.params.filename;
+    const filePath = path.join(__dirname, '..', 'uploads', 'tickets', filename);
+
+    // Check if file exists
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({
+        success: false,
+        message: 'Fișierul nu a fost găsit'
+      });
+    }
+
+    // Send file
+    res.sendFile(filePath);
+  } catch (error) {
+    console.error('Error serving attachment:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la descărcarea fișierului'
     });
   }
 });
