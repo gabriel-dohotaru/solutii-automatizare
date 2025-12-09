@@ -563,7 +563,7 @@ router.post('/tickets/:id/messages', authenticateToken, (req, res) => {
     `).run(ticketId, userId, message);
 
     // Update ticket's updated_at timestamp
-    db.prepare('UPDATE support_tickets SET updated_at = datetime("now") WHERE id = ?')
+    db.prepare("UPDATE support_tickets SET updated_at = datetime('now') WHERE id = ?")
       .run(ticketId);
 
     // Get the created message with user info

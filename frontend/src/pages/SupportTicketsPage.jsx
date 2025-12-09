@@ -10,7 +10,10 @@ import {
   ChevronDown,
   User,
   Calendar,
-  Tag
+  Tag,
+  Send,
+  ArrowLeft,
+  Reply
 } from 'lucide-react';
 
 const SupportTicketsPage = () => {
@@ -19,6 +22,11 @@ const SupportTicketsPage = () => {
   const [error, setError] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [ticketDetail, setTicketDetail] = useState(null);
+  const [ticketMessages, setTicketMessages] = useState([]);
+  const [showTicketDetail, setShowTicketDetail] = useState(false);
+  const [replyMessage, setReplyMessage] = useState('');
+  const [replyLoading, setReplyLoading] = useState(false);
   const [projects, setProjects] = useState([]);
   const [formData, setFormData] = useState({
     subject: '',
@@ -113,6 +121,82 @@ const SupportTicketsPage = () => {
     }
   };
 
+  // Fetch ticket details with messages
+  const fetchTicketDetail = async (ticketId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`/api/client/tickets/${ticketId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setTicketDetail(data.ticket);
+        setTicketMessages(data.messages || []);
+        setShowTicketDetail(true);
+      } else {
+        setError(data.message || 'Eroare la încărcarea detaliilor tichetului');
+      }
+    } catch (err) {
+      setError('Eroare de conexiune');
+    }
+  };
+
+  // Handle ticket click
+  const handleTicketClick = (ticket) => {
+    setSelectedTicket(ticket);
+    fetchTicketDetail(ticket.id);
+  };
+
+  // Handle back to tickets list
+  const handleBackToTickets = () => {
+    setShowTicketDetail(false);
+    setSelectedTicket(null);
+    setTicketDetail(null);
+    setTicketMessages([]);
+    setReplyMessage('');
+  };
+
+  // Handle reply submission
+  const handleReplySubmit = async (e) => {
+    e.preventDefault();
+    if (!replyMessage.trim()) return;
+
+    setReplyLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`/api/client/tickets/${ticketDetail.id}/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ message: replyMessage.trim() })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        // Add the new message to the messages list
+        setTicketMessages(prev => [...prev, data.data]);
+        setReplyMessage('');
+
+        // Update ticket's updated_at timestamp
+        setTicketDetail(prev => ({
+          ...prev,
+          updated_at: new Date().toISOString()
+        }));
+      } else {
+        setError(data.message || 'Eroare la trimiterea răspunsului');
+      }
+    } catch (err) {
+      setError('Eroare de conexiune');
+    } finally {
+      setReplyLoading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormLoading(true);
@@ -169,6 +253,145 @@ const SupportTicketsPage = () => {
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
             <p className="mt-4 text-slate-600">Se încarcă tichetele de suport...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show ticket detail view
+  if (showTicketDetail && ticketDetail) {
+    return (
+      <div className="min-h-screen bg-slate-50 py-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Back button */}
+          <button
+            onClick={handleBackToTickets}
+            className="flex items-center text-slate-600 hover:text-primary mb-6 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Înapoi la tichete
+          </button>
+
+          {/* Ticket Header */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <div className="flex items-center space-x-3 mb-2">
+                  <h1 className="text-2xl font-bold text-slate-900">{ticketDetail.subject}</h1>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${priorityConfig[ticketDetail.priority]?.color}`}>
+                    {priorityConfig[ticketDetail.priority]?.label}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-4 text-sm text-slate-600">
+                  <div className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {formatDate(ticketDetail.created_at)}
+                  </div>
+                  {ticketDetail.project_name && (
+                    <div className="flex items-center">
+                      <Tag className="h-4 w-4 mr-1" />
+                      {ticketDetail.project_name}
+                    </div>
+                  )}
+                  <div className="flex items-center">
+                    <MessageSquare className="h-4 w-4 mr-1" />
+                    {ticketMessages.length} mesaje
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${statusConfig[ticketDetail.status]?.color}`}>
+                  {(() => {
+                    const StatusIcon = statusConfig[ticketDetail.status]?.icon || AlertCircle;
+                    return <StatusIcon className="h-4 w-4 mr-1" />;
+                  })()}
+                  {statusConfig[ticketDetail.status]?.label}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Messages Thread */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
+            <h2 className="text-lg font-semibold text-slate-900 mb-6">Conversație</h2>
+
+            <div className="space-y-4">
+              {ticketMessages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${message.role === 'admin' ? 'justify-start' : 'justify-end'}`}
+                >
+                  <div
+                    className={`max-w-lg px-4 py-3 rounded-lg ${
+                      message.role === 'admin'
+                        ? 'bg-slate-100 text-slate-900'
+                        : 'bg-primary text-white'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2 mb-1">
+                      <span className="text-sm font-medium">
+                        {message.role === 'admin'
+                          ? 'Echipa de Suport'
+                          : `${message.first_name} ${message.last_name}`
+                        }
+                      </span>
+                      <span className={`text-xs ${message.role === 'admin' ? 'text-slate-500' : 'text-blue-100'}`}>
+                        {formatDate(message.created_at)}
+                      </span>
+                    </div>
+                    <p className="text-sm whitespace-pre-wrap">{message.message}</p>
+                  </div>
+                </div>
+              ))}
+
+              {ticketMessages.length === 0 && (
+                <div className="text-center py-8">
+                  <MessageSquare className="h-12 w-12 text-slate-300 mx-auto mb-3" />
+                  <p className="text-slate-500">Nu există mesaje încă</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Reply Form */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">Trimite un răspuns</h3>
+
+            <form onSubmit={handleReplySubmit}>
+              <div className="mb-4">
+                <textarea
+                  value={replyMessage}
+                  onChange={(e) => setReplyMessage(e.target.value)}
+                  placeholder="Scrie răspunsul tău..."
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                  rows={4}
+                  required
+                />
+              </div>
+
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => setReplyMessage('')}
+                  className="px-4 py-2 text-slate-600 hover:text-slate-800 transition-colors"
+                >
+                  Anulează
+                </button>
+                <button
+                  type="submit"
+                  disabled={!replyMessage.trim() || replyLoading}
+                  className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {replyLoading ? (
+                    <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  ) : (
+                    <Send className="h-4 w-4 mr-2" />
+                  )}
+                  Trimite răspuns
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -375,7 +598,7 @@ const SupportTicketsPage = () => {
                 <div
                   key={ticket.id}
                   className="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow cursor-pointer"
-                  onClick={() => setSelectedTicket(ticket)}
+                  onClick={() => handleTicketClick(ticket)}
                 >
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-4">

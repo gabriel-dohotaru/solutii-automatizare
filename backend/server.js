@@ -103,7 +103,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
+// Start server - port updated to 3007
 app.listen(PORT, () => {
   console.log('');
   console.log('================================================');

@@ -178,7 +178,7 @@
       "Step 6: Submit reply",
       "Step 7: Verify new message appears in thread"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
