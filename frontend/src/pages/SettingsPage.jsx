@@ -10,7 +10,8 @@ import {
   Save,
   AlertCircle,
   CheckCircle,
-  Lock
+  Lock,
+  Bell
 } from 'lucide-react';
 
 function SettingsPage() {
@@ -26,6 +27,16 @@ function SettingsPage() {
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
+  });
+
+  // Notification preferences state
+  const [savingNotifications, setSavingNotifications] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState(null);
+  const [notificationPrefs, setNotificationPrefs] = useState({
+    notifyProjectUpdates: true,
+    notifyTicketReplies: true,
+    notifyInvoices: true,
+    notifyMarketing: false
   });
 
   // Form state
@@ -58,6 +69,16 @@ function SettingsPage() {
         phone: parsedUser.phone || '',
         company: parsedUser.company || ''
       });
+
+      // Populate notification preferences
+      if (parsedUser.notifications) {
+        setNotificationPrefs({
+          notifyProjectUpdates: parsedUser.notifications.notifyProjectUpdates !== false,
+          notifyTicketReplies: parsedUser.notifications.notifyTicketReplies !== false,
+          notifyInvoices: parsedUser.notifications.notifyInvoices !== false,
+          notifyMarketing: parsedUser.notifications.notifyMarketing === true
+        });
+      }
 
       setLoading(false);
     } catch (error) {
@@ -179,6 +200,62 @@ function SettingsPage() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleNotificationToggle = (key) => {
+    setNotificationPrefs(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+  const handleSaveNotifications = async (e) => {
+    e.preventDefault();
+    setSavingNotifications(true);
+    setNotificationMessage(null);
+
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch('/api/auth/notifications', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(notificationPrefs)
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Update user data in localStorage with new notification preferences
+        const updatedUser = {
+          ...user,
+          notifications: data.data.notifications
+        };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setUser(updatedUser);
+
+        setNotificationMessage({
+          type: 'success',
+          text: data.message || 'Preferințe notificări actualizate cu succes!'
+        });
+      } else {
+        setNotificationMessage({
+          type: 'error',
+          text: data.message || 'Eroare la actualizarea preferințelor'
+        });
+      }
+    } catch (error) {
+      console.error('Update notifications error:', error);
+      setNotificationMessage({
+        type: 'error',
+        text: 'Eroare de conexiune. Vă rugăm încercați din nou.'
+      });
+    } finally {
+      setSavingNotifications(false);
+    }
   };
 
   const handleLogout = () => {
@@ -498,6 +575,156 @@ function SettingsPage() {
               >
                 <Lock className="w-5 h-5 mr-2" />
                 {changingPassword ? 'Se schimbă...' : 'Schimbă Parola'}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Notification Preferences Section */}
+        <div className="bg-white rounded-lg shadow-sm border p-6 md:p-8 mt-6">
+          <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+            <Bell className="w-5 h-5 mr-2" />
+            Preferințe Notificări
+          </h2>
+
+          {/* Notification Success/Error Message */}
+          {notificationMessage && (
+            <div className={`mb-6 p-4 rounded-lg flex items-start ${
+              notificationMessage.type === 'success'
+                ? 'bg-green-50 border border-green-200'
+                : 'bg-red-50 border border-red-200'
+            }`}>
+              {notificationMessage.type === 'success' ? (
+                <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5" />
+              ) : (
+                <AlertCircle className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
+              )}
+              <p className={`text-sm ${
+                notificationMessage.type === 'success' ? 'text-green-800' : 'text-red-800'
+              }`}>
+                {notificationMessage.text}
+              </p>
+            </div>
+          )}
+
+          <form onSubmit={handleSaveNotifications} className="space-y-6">
+            <p className="text-sm text-slate-600 mb-4">
+              Alege ce tipuri de notificări dorești să primești prin email
+            </p>
+
+            {/* Project Updates Toggle */}
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+              <div>
+                <label htmlFor="notifyProjectUpdates" className="text-sm font-medium text-slate-900 cursor-pointer">
+                  Actualizări Proiecte
+                </label>
+                <p className="text-xs text-slate-500 mt-1">
+                  Primește notificări când există progres la proiectele tale
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleNotificationToggle('notifyProjectUpdates')}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  notificationPrefs.notifyProjectUpdates ? 'bg-primary' : 'bg-slate-300'
+                }`}
+                id="notifyProjectUpdates"
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    notificationPrefs.notifyProjectUpdates ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Ticket Replies Toggle */}
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+              <div>
+                <label htmlFor="notifyTicketReplies" className="text-sm font-medium text-slate-900 cursor-pointer">
+                  Răspunsuri Tichete Suport
+                </label>
+                <p className="text-xs text-slate-500 mt-1">
+                  Primește notificări când primești răspuns la tichetele tale
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleNotificationToggle('notifyTicketReplies')}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  notificationPrefs.notifyTicketReplies ? 'bg-primary' : 'bg-slate-300'
+                }`}
+                id="notifyTicketReplies"
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    notificationPrefs.notifyTicketReplies ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Invoices Toggle */}
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+              <div>
+                <label htmlFor="notifyInvoices" className="text-sm font-medium text-slate-900 cursor-pointer">
+                  Facturi
+                </label>
+                <p className="text-xs text-slate-500 mt-1">
+                  Primește notificări când ai facturi noi sau scadente
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleNotificationToggle('notifyInvoices')}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  notificationPrefs.notifyInvoices ? 'bg-primary' : 'bg-slate-300'
+                }`}
+                id="notifyInvoices"
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    notificationPrefs.notifyInvoices ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Marketing Toggle */}
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+              <div>
+                <label htmlFor="notifyMarketing" className="text-sm font-medium text-slate-900 cursor-pointer">
+                  Noutăți și Oferte
+                </label>
+                <p className="text-xs text-slate-500 mt-1">
+                  Primește newsletter cu noutăți, articole și oferte speciale
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleNotificationToggle('notifyMarketing')}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  notificationPrefs.notifyMarketing ? 'bg-primary' : 'bg-slate-300'
+                }`}
+                id="notifyMarketing"
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    notificationPrefs.notifyMarketing ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex items-center justify-end pt-4 border-t">
+              <button
+                type="submit"
+                disabled={savingNotifications}
+                className="flex items-center px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed"
+              >
+                <Save className="w-5 h-5 mr-2" />
+                {savingNotifications ? 'Se salvează...' : 'Salvează Preferințe'}
               </button>
             </div>
           </form>

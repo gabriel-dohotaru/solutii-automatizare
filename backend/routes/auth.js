@@ -173,7 +173,9 @@ router.post('/login', [
 router.get('/me', authenticateToken, (req, res) => {
   try {
     const user = db.prepare(`
-      SELECT id, email, first_name, last_name, phone, company_name, role, email_verified, created_at, updated_at
+      SELECT id, email, first_name, last_name, phone, company_name, role, email_verified,
+             notify_project_updates, notify_ticket_replies, notify_invoices, notify_marketing,
+             created_at, updated_at
       FROM users
       WHERE id = ?
     `).get(req.user.userId);
@@ -185,11 +187,25 @@ router.get('/me', authenticateToken, (req, res) => {
       });
     }
 
-    // Map company_name to company for API consistency
-    const { company_name, ...userWithoutCompanyName } = user;
+    // Map company_name to company and notification fields for API consistency
+    const {
+      company_name,
+      notify_project_updates,
+      notify_ticket_replies,
+      notify_invoices,
+      notify_marketing,
+      ...userWithoutCompanyName
+    } = user;
+
     const userResponse = {
       ...userWithoutCompanyName,
-      company: company_name
+      company: company_name,
+      notifications: {
+        notifyProjectUpdates: !!notify_project_updates,
+        notifyTicketReplies: !!notify_ticket_replies,
+        notifyInvoices: !!notify_invoices,
+        notifyMarketing: !!notify_marketing
+      }
     };
 
     res.json({
@@ -379,6 +395,103 @@ router.put('/password', [
     res.status(500).json({
       success: false,
       message: 'Eroare la schimbarea parolei'
+    });
+  }
+});
+
+// Update notification preferences (protected route)
+router.put('/notifications', [
+  authenticateToken,
+  body('notifyProjectUpdates').optional().isBoolean().withMessage('Valoare invalidă pentru notificări proiecte'),
+  body('notifyTicketReplies').optional().isBoolean().withMessage('Valoare invalidă pentru notificări tichete'),
+  body('notifyInvoices').optional().isBoolean().withMessage('Valoare invalidă pentru notificări facturi'),
+  body('notifyMarketing').optional().isBoolean().withMessage('Valoare invalidă pentru notificări marketing')
+], async (req, res) => {
+  try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Date invalide',
+        errors: errors.array()
+      });
+    }
+
+    const { notifyProjectUpdates, notifyTicketReplies, notifyInvoices, notifyMarketing } = req.body;
+    const userId = req.user.userId;
+
+    // Build dynamic update query
+    const updateFields = [];
+    const updateValues = [];
+
+    if (notifyProjectUpdates !== undefined) {
+      updateFields.push('notify_project_updates = ?');
+      updateValues.push(notifyProjectUpdates ? 1 : 0);
+    }
+    if (notifyTicketReplies !== undefined) {
+      updateFields.push('notify_ticket_replies = ?');
+      updateValues.push(notifyTicketReplies ? 1 : 0);
+    }
+    if (notifyInvoices !== undefined) {
+      updateFields.push('notify_invoices = ?');
+      updateValues.push(notifyInvoices ? 1 : 0);
+    }
+    if (notifyMarketing !== undefined) {
+      updateFields.push('notify_marketing = ?');
+      updateValues.push(notifyMarketing ? 1 : 0);
+    }
+
+    // Always update the updated_at timestamp
+    updateFields.push('updated_at = datetime(\'now\')');
+
+    if (updateFields.length === 1) {
+      // Only updated_at would be updated, no actual changes
+      return res.status(400).json({
+        success: false,
+        message: 'Nicio modificare detectată'
+      });
+    }
+
+    // Add userId to values array
+    updateValues.push(userId);
+
+    // Execute update
+    const query = `UPDATE users SET ${updateFields.join(', ')} WHERE id = ?`;
+    const result = db.prepare(query).run(...updateValues);
+
+    if (result.changes === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Utilizator negăsit'
+      });
+    }
+
+    // Fetch updated notification preferences
+    const updatedPrefs = db.prepare(`
+      SELECT notify_project_updates, notify_ticket_replies, notify_invoices, notify_marketing
+      FROM users
+      WHERE id = ?
+    `).get(userId);
+
+    res.json({
+      success: true,
+      message: 'Preferințe notificări actualizate cu succes',
+      data: {
+        notifications: {
+          notifyProjectUpdates: !!updatedPrefs.notify_project_updates,
+          notifyTicketReplies: !!updatedPrefs.notify_ticket_replies,
+          notifyInvoices: !!updatedPrefs.notify_invoices,
+          notifyMarketing: !!updatedPrefs.notify_marketing
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error('Update notifications error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la actualizarea preferințelor'
     });
   }
 });
