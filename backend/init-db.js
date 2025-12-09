@@ -535,6 +535,109 @@ Utilizarea unui CDN pentru imagini și fișiere CSS/JS reduce timpul de încărc
 
 console.log('✓ Sample portfolio and blog content created');
 
+// Insert sample projects for test client
+const sampleProjects = [
+  {
+    client_id: 2, // test client
+    name: 'Modul PrestaShop Personalizat',
+    description: 'Dezvoltare modul custom pentru managementul produselor multiple cu integrare ERP',
+    service_type: 'ecommerce',
+    status: 'in_progress',
+    progress: 65,
+    estimated_hours: 40,
+    price: 1500,
+    currency: 'EUR',
+    start_date: '2024-11-15',
+    deadline: '2024-12-20',
+    created_at: '2024-11-10'
+  },
+  {
+    client_id: 2, // test client
+    name: 'Integrare API Magazin',
+    description: 'Integrare cu sisteme de gestiune a stocurilor și automatizare comenzi',
+    service_type: 'automation',
+    status: 'in_progress',
+    progress: 30,
+    estimated_hours: 60,
+    price: 2500,
+    currency: 'EUR',
+    start_date: '2024-11-20',
+    deadline: '2025-01-15',
+    created_at: '2024-11-15'
+  },
+  {
+    client_id: 2, // test client
+    name: 'Site Prezentare Companie',
+    description: 'Website responsive pentru prezentarea serviciilor companiei cu CMS integrat',
+    service_type: 'webdev',
+    status: 'completed',
+    progress: 100,
+    estimated_hours: 30,
+    price: 800,
+    currency: 'EUR',
+    start_date: '2024-10-01',
+    deadline: '2024-10-30',
+    completed_date: '2024-10-28',
+    created_at: '2024-09-25'
+  },
+  {
+    client_id: 2, // test client
+    name: 'Optimizare Performanță WooCommerce',
+    description: 'Optimizare viteză de loading și implementare cache inteligent',
+    service_type: 'bugfix',
+    status: 'review',
+    progress: 95,
+    estimated_hours: 20,
+    price: 600,
+    currency: 'EUR',
+    start_date: '2024-11-25',
+    deadline: '2024-12-10',
+    created_at: '2024-11-20'
+  },
+  {
+    client_id: 2, // test client
+    name: 'Dashboard Client Custom',
+    description: 'Aplicație web pentru managementul comenzilor și clienților în timp real',
+    service_type: 'webdev',
+    status: 'inquiry',
+    progress: 0,
+    estimated_hours: 80,
+    price: 3500,
+    currency: 'EUR',
+    start_date: null,
+    deadline: null,
+    created_at: '2024-12-05'
+  }
+];
+
+const insertProject = db.prepare(`
+  INSERT INTO projects (
+    client_id, name, description, service_type, status, progress,
+    estimated_hours, price, currency, start_date, deadline,
+    completed_date, created_at, updated_at
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+`);
+
+sampleProjects.forEach(project => {
+  insertProject.run(
+    project.client_id,
+    project.name,
+    project.description,
+    project.service_type,
+    project.status,
+    project.progress,
+    project.estimated_hours,
+    project.price,
+    project.currency,
+    project.start_date,
+    project.deadline,
+    project.completed_date,
+    project.created_at
+  );
+});
+
+console.log('✓ Sample projects created for test client');
+
 db.close();
 
 console.log('\n✅ Database initialization complete!');
@@ -544,6 +647,7 @@ console.log('   - Services: 4 services');
 console.log('   - Packages: 3 pricing tiers');
 console.log('   - Portfolio: 1 sample item');
 console.log('   - Blog: 1 sample post');
+console.log('   - Projects: 5 sample projects for test client');
 console.log('\n🔐 Login credentials:');
 console.log('   Admin: admin@solutiiautomatizare.ro / admin123');
 console.log('   Client: client@test.ro / client123');

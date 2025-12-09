@@ -134,7 +134,7 @@
       "Step 5: Click on a project",
       "Step 6: Verify project details page loads"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
