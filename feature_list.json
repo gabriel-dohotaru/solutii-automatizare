@@ -82,7 +82,7 @@
       "Step 7: Verify success message",
       "Step 8: Verify user created in database"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
