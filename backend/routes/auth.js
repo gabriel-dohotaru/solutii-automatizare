@@ -5,7 +5,8 @@ import { body, validationResult } from 'express-validator';
 import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
-// Updated: Profile update endpoint added
+import crypto from 'crypto';
+// Updated: Forgot password and reset password endpoints added
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -492,6 +493,175 @@ router.put('/notifications', [
     res.status(500).json({
       success: false,
       message: 'Eroare la actualizarea preferințelor'
+    });
+  }
+});
+
+// Forgot password (request reset token)
+router.post('/forgot-password', [
+  body('email').isEmail().withMessage('Email invalid')
+], async (req, res) => {
+  try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email invalid',
+        errors: errors.array()
+      });
+    }
+
+    const { email } = req.body;
+
+    // Find user
+    const user = db.prepare('SELECT id, email FROM users WHERE email = ?').get(email);
+
+    // Always return success message for security (don't reveal if email exists)
+    // But only send email if user exists
+    if (user) {
+      // Generate reset token (32 random bytes as hex string)
+      const resetToken = crypto.randomBytes(32).toString('hex');
+      const expiresAt = new Date(Date.now() + 3600000); // 1 hour from now
+
+      // Store token in database (create table if not exists)
+      db.prepare(`
+        CREATE TABLE IF NOT EXISTS password_reset_tokens (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id INTEGER NOT NULL,
+          token TEXT NOT NULL UNIQUE,
+          expires_at DATETIME NOT NULL,
+          used INTEGER DEFAULT 0,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )
+      `).run();
+
+      // Delete any existing tokens for this user
+      db.prepare('DELETE FROM password_reset_tokens WHERE user_id = ?').run(user.id);
+
+      // Insert new token
+      db.prepare(`
+        INSERT INTO password_reset_tokens (user_id, token, expires_at)
+        VALUES (?, ?, ?)
+      `).run(user.id, resetToken, expiresAt.toISOString());
+
+      // In a real application, send email with reset link
+      // For testing purposes, log the reset link
+      const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
+      console.log('🔑 Password Reset Link:', resetLink);
+      console.log('📧 Sending password reset email to:', email);
+    }
+
+    // Always return success message
+    res.json({
+      success: true,
+      message: 'Dacă email-ul există în sistem, veți primi instrucțiuni pentru resetarea parolei'
+    });
+
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la procesarea cererii'
+    });
+  }
+});
+
+// Reset password with token
+router.post('/reset-password', [
+  body('token').notEmpty().withMessage('Token lipsă'),
+  body('newPassword').isLength({ min: 6 }).withMessage('Parola trebuie să aibă minim 6 caractere'),
+  body('confirmPassword').notEmpty().withMessage('Confirmarea parolei este obligatorie')
+], async (req, res) => {
+  try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Date invalide',
+        errors: errors.array()
+      });
+    }
+
+    const { token, newPassword, confirmPassword } = req.body;
+
+    // Check if passwords match
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Parolele nu corespund'
+      });
+    }
+
+    // Find token in database
+    const resetToken = db.prepare(`
+      SELECT id, user_id, expires_at, used
+      FROM password_reset_tokens
+      WHERE token = ?
+    `).get(token);
+
+    if (!resetToken) {
+      return res.status(400).json({
+        success: false,
+        message: 'Token invalid sau expirat'
+      });
+    }
+
+    // Check if token has been used
+    if (resetToken.used === 1) {
+      return res.status(400).json({
+        success: false,
+        message: 'Acest link a fost deja folosit'
+      });
+    }
+
+    // Check if token has expired
+    const now = new Date();
+    const expiresAt = new Date(resetToken.expires_at);
+    if (now > expiresAt) {
+      return res.status(400).json({
+        success: false,
+        message: 'Acest link a expirat. Vă rugăm să solicitați unul nou'
+      });
+    }
+
+    // Hash new password
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // Update user's password
+    const result = db.prepare(`
+      UPDATE users
+      SET password_hash = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).run(hashedPassword, resetToken.user_id);
+
+    if (result.changes === 0) {
+      return res.status(500).json({
+        success: false,
+        message: 'Eroare la resetarea parolei'
+      });
+    }
+
+    // Mark token as used
+    db.prepare(`
+      UPDATE password_reset_tokens
+      SET used = 1
+      WHERE id = ?
+    `).run(resetToken.id);
+
+    res.json({
+      success: true,
+      message: 'Parolă resetată cu succes. Vă puteți autentifica cu noua parolă'
+    });
+
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Eroare la resetarea parolei'
     });
   }
 });

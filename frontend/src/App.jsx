@@ -12,6 +12,8 @@ import QuoteRequestPage from './pages/QuoteRequestPage';
 // import AboutPage from './pages/AboutPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import ClientDashboard from './pages/ClientDashboard';
 import ProjectsListPage from './pages/ProjectsListPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
@@ -33,6 +35,8 @@ function App() {
           <Route path="/solicita-oferta" element={<QuoteRequestPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/client" element={<ClientDashboard />} />
           <Route path="/client/proiecte" element={<ProjectsListPage />} />
           <Route path="/client/proiecte/:projectId" element={<ProjectDetailPage />} />

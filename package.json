@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/gabriel-dohotaru/solutii-automatizare#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^12.5.0",
     "puppeteer": "^24.32.1"
   }
 }

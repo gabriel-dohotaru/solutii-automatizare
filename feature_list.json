@@ -290,7 +290,7 @@
       "Step 10: Submit reset form",
       "Step 11: Verify can login with new password"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",

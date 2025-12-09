@@ -243,9 +243,9 @@ function LoginPage() {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="text-primary hover:text-primary-dark font-medium">
+                <Link to="/forgot-password" className="text-primary hover:text-primary-dark font-medium">
                   Ai uitat parola?
-                </a>
+                </Link>
               </div>
             </div>
 
