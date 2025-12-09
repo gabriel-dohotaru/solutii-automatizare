@@ -12,7 +12,8 @@ import {
   TrendingUp,
   User,
   Filter,
-  Search
+  Search,
+  LogOut
 } from 'lucide-react';
 
 function ProjectsListPage() {
@@ -70,6 +71,13 @@ function ProjectsListPage() {
       // Fallback to empty array if network fails
       setProjects([]);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
   };
 
   const getStatusBadge = (status) => {
@@ -165,6 +173,13 @@ function ProjectsListPage() {
               <span className="text-sm text-slate-600">
                 {projects.length} proiecte totale
               </span>
+              <button
+                onClick={handleLogout}
+                className="p-2 text-slate-500 hover:text-slate-700 transition-colors"
+                title="Deconectare"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>

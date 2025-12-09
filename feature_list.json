@@ -272,7 +272,7 @@
       "Step 4: Verify JWT token is cleared",
       "Step 5: Verify cannot access protected routes"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",

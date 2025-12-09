@@ -100,6 +100,7 @@ function ClientDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('user');
     window.location.href = '/login';
   };

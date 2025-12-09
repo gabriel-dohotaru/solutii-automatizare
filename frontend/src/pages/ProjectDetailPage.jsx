@@ -15,7 +15,8 @@ import {
   Edit,
   Save,
   X,
-  Paperclip
+  Paperclip,
+  LogOut
 } from 'lucide-react';
 
 function ProjectDetailPage() {
@@ -128,6 +129,13 @@ function ProjectDetailPage() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
@@ -174,6 +182,13 @@ function ProjectDetailPage() {
                 {getStatusIcon(project.status)}
                 <span className="ml-1">{project.status === 'in_progress' ? 'În Progres' : project.status === 'completed' ? 'Finalizat' : 'În Așteptare'}</span>
               </span>
+              <button
+                onClick={handleLogout}
+                className="p-2 text-slate-500 hover:text-slate-700 transition-colors"
+                title="Deconectare"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>

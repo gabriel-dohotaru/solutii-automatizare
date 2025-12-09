@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FileText, Calendar, Euro, Download, Check, Clock, AlertCircle, Search, Filter } from 'lucide-react';
+import { FileText, Calendar, Euro, Download, Check, Clock, AlertCircle, Search, Filter, LogOut } from 'lucide-react';
 
 const InvoicesPage = () => {
   const [invoices, setInvoices] = useState([]);
@@ -129,6 +129,13 @@ const InvoicesPage = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -152,11 +159,20 @@ const InvoicesPage = () => {
                 Gestionează și descarcă facturile pentru proiectele tale
               </p>
             </div>
-            <div className="flex items-center space-x-2">
-              <FileText className="h-6 w-6 text-indigo-600" />
-              <span className="text-sm font-medium text-gray-700">
-                {invoices.length} facturi
-              </span>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <FileText className="h-6 w-6 text-indigo-600" />
+                <span className="text-sm font-medium text-gray-700">
+                  {invoices.length} facturi
+                </span>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="p-2 text-slate-500 hover:text-slate-700 transition-colors"
+                title="Deconectare"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>

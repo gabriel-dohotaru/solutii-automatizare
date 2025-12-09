@@ -17,7 +17,8 @@ import {
   Paperclip,
   X,
   FileText,
-  Download
+  Download,
+  LogOut
 } from 'lucide-react';
 
 const SupportTicketsPage = () => {
@@ -162,6 +163,14 @@ const SupportTicketsPage = () => {
     setTicketDetail(null);
     setTicketMessages([]);
     setReplyMessage('');
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
   };
 
   // Handle reply submission
@@ -528,13 +537,22 @@ const SupportTicketsPage = () => {
               <h1 className="text-3xl font-bold text-slate-900">Tichete Suport</h1>
               <p className="mt-2 text-slate-600">Gestionează tichetele tale de suport și comunică cu echipa noastră</p>
             </div>
-            <button
-              onClick={() => setShowCreateForm(true)}
-              className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
-            >
-              <Plus className="h-5 w-5 mr-2" />
-              Tichet Nou
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => setShowCreateForm(true)}
+                className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              >
+                <Plus className="h-5 w-5 mr-2" />
+                Tichet Nou
+              </button>
+              <button
+                onClick={handleLogout}
+                className="p-2 text-slate-500 hover:text-slate-700 transition-colors"
+                title="Deconectare"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Navigation */}
