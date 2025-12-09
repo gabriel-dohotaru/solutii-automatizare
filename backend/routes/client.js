@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
 import fs from 'fs';
+import PDFDocument from 'pdfkit';
 import { authenticateToken } from '../middleware/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -748,6 +749,195 @@ router.get('/invoices/:id', authenticateToken, (req, res) => {
       success: false,
       message: 'Eroare la încărcarea detaliilor facturii'
     });
+  }
+});
+
+// Download invoice as PDF
+router.get('/invoices/:id/download', authenticateToken, (req, res) => {
+  try {
+    const invoiceId = req.params.id;
+    const userId = req.user.userId;
+
+    // Get invoice details with client info
+    const invoice = db.prepare(`
+      SELECT
+        i.*,
+        p.name as project_name,
+        p.description as project_description,
+        u.first_name,
+        u.last_name,
+        u.email as client_email,
+        u.company_name,
+        u.phone as client_phone
+      FROM invoices i
+      LEFT JOIN projects p ON i.project_id = p.id
+      LEFT JOIN users u ON i.client_id = u.id
+      WHERE i.id = ? AND i.client_id = ?
+    `).get(invoiceId, userId);
+
+    if (!invoice) {
+      return res.status(404).json({
+        success: false,
+        message: 'Factura nu a fost găsită'
+      });
+    }
+
+    // Create a new PDF document
+    const doc = new PDFDocument({ margin: 50, size: 'A4' });
+
+    // Set response headers for PDF download
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="Factura_${invoice.invoice_number}.pdf"`);
+
+    // Pipe the PDF to the response
+    doc.pipe(res);
+
+    // Add content to PDF
+    // Header - Company Info
+    doc.fontSize(24)
+       .fillColor('#4F46E5')
+       .text('Soluții Automatizare', 50, 50);
+
+    doc.fontSize(10)
+       .fillColor('#64748B')
+       .text('www.solutiiautomatizare.ro', 50, 80)
+       .text('contact@solutiiautomatizare.ro', 50, 95)
+       .text('București, România', 50, 110);
+
+    // Invoice Title
+    doc.fontSize(28)
+       .fillColor('#1E293B')
+       .text('FACTURĂ', 400, 50);
+
+    doc.fontSize(12)
+       .fillColor('#64748B')
+       .text(`Număr: ${invoice.invoice_number}`, 400, 85)
+       .text(`Data: ${new Date(invoice.created_at).toLocaleDateString('ro-RO')}`, 400, 100)
+       .text(`Scadent: ${invoice.due_date ? new Date(invoice.due_date).toLocaleDateString('ro-RO') : 'N/A'}`, 400, 115);
+
+    // Draw line separator
+    doc.moveTo(50, 140).lineTo(545, 140).stroke();
+
+    // Client Information
+    doc.fontSize(12)
+       .fillColor('#1E293B')
+       .text('Facturat către:', 50, 160);
+
+    doc.fontSize(11)
+       .fillColor('#64748B')
+       .text(`${invoice.first_name} ${invoice.last_name}`, 50, 180);
+
+    if (invoice.company_name) {
+      doc.text(invoice.company_name, 50, 195);
+    }
+
+    doc.text(invoice.client_email, 50, invoice.company_name ? 210 : 195);
+
+    if (invoice.client_phone) {
+      doc.text(invoice.client_phone, 50, invoice.company_name ? 225 : 210);
+    }
+
+    // Invoice Details
+    const startY = 280;
+    doc.fontSize(12)
+       .fillColor('#1E293B')
+       .text('Detalii Factură', 50, startY);
+
+    // Table header
+    const tableTop = startY + 30;
+    doc.fontSize(10)
+       .fillColor('#FFFFFF')
+       .rect(50, tableTop, 495, 25)
+       .fill('#4F46E5');
+
+    doc.fillColor('#FFFFFF')
+       .text('Descriere', 60, tableTop + 8)
+       .text('Proiect', 300, tableTop + 8)
+       .text('Sumă', 470, tableTop + 8);
+
+    // Table content
+    const contentY = tableTop + 35;
+    doc.fontSize(10)
+       .fillColor('#1E293B')
+       .text(invoice.project_name || 'Servicii de dezvoltare software', 60, contentY)
+       .text(invoice.project_name || '-', 300, contentY);
+
+    doc.fontSize(11)
+       .fillColor('#1E293B')
+       .text(`${invoice.amount.toFixed(2)} ${invoice.currency}`, 450, contentY);
+
+    // Draw table border
+    doc.rect(50, tableTop + 25, 495, 40).stroke();
+
+    // Totals section
+    const totalsY = contentY + 80;
+    doc.moveTo(350, totalsY - 10).lineTo(545, totalsY - 10).stroke();
+
+    doc.fontSize(11)
+       .fillColor('#64748B')
+       .text('Subtotal:', 350, totalsY)
+       .text(`${invoice.amount.toFixed(2)} ${invoice.currency}`, 450, totalsY);
+
+    doc.fontSize(11)
+       .fillColor('#64748B')
+       .text('TVA (19%):', 350, totalsY + 20)
+       .text(`${(invoice.amount * 0.19).toFixed(2)} ${invoice.currency}`, 450, totalsY + 20);
+
+    doc.moveTo(350, totalsY + 45).lineTo(545, totalsY + 45).stroke();
+
+    doc.fontSize(14)
+       .fillColor('#1E293B')
+       .text('Total:', 350, totalsY + 55)
+       .text(`${(invoice.amount * 1.19).toFixed(2)} ${invoice.currency}`, 450, totalsY + 55);
+
+    // Status badge
+    const statusY = totalsY + 100;
+    const statusColors = {
+      paid: { bg: '#10B981', text: 'PLĂTITĂ' },
+      sent: { bg: '#3B82F6', text: 'TRIMISĂ' },
+      draft: { bg: '#6B7280', text: 'CIORNĂ' },
+      overdue: { bg: '#EF4444', text: 'RESTANTĂ' },
+      cancelled: { bg: '#9CA3AF', text: 'ANULATĂ' }
+    };
+
+    const statusInfo = statusColors[invoice.status] || statusColors.draft;
+
+    doc.fontSize(10)
+       .fillColor(statusInfo.bg)
+       .text(`Status: ${statusInfo.text}`, 350, statusY);
+
+    // Payment info if paid
+    if (invoice.status === 'paid' && invoice.paid_date) {
+      doc.fontSize(9)
+         .fillColor('#64748B')
+         .text(`Plătită la: ${new Date(invoice.paid_date).toLocaleDateString('ro-RO')}`, 350, statusY + 20);
+    }
+
+    // Footer notes
+    doc.fontSize(9)
+       .fillColor('#64748B')
+       .text('Notă: Această factură este un document generat electronic.', 50, 700)
+       .text('Pentru întrebări, contactați-ne la contact@solutiiautomatizare.ro', 50, 715);
+
+    // Footer
+    doc.fontSize(8)
+       .fillColor('#9CA3AF')
+       .text('© 2024 Soluții Automatizare. Toate drepturile rezervate.', 50, 760, {
+         align: 'center',
+         width: 495
+       });
+
+    // Finalize the PDF
+    doc.end();
+
+  } catch (error) {
+    console.error('Error generating invoice PDF:', error);
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: 'Eroare la generarea PDF-ului facturii'
+      });
+    }
   }
 });
 

@@ -103,28 +103,26 @@ const InvoicesPage = () => {
     try {
       const token = localStorage.getItem('token');
 
-      // For now, show an alert that PDF download would happen here
-      // In a real implementation, this would download a PDF file
-      alert(`Descărcare PDF pentru factura ${invoiceNumber} (funcționalitate de implementat)`);
+      const response = await fetch(`/api/client/invoices/${invoiceId}/download`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
-      // Future implementation:
-      // const response = await fetch(`/api/client/invoices/${invoiceId}/download`, {
-      //   headers: {
-      //     'Authorization': `Bearer ${token}`
-      //   }
-      // });
-
-      // if (response.ok) {
-      //   const blob = await response.blob();
-      //   const url = window.URL.createObjectURL(blob);
-      //   const a = document.createElement('a');
-      //   a.href = url;
-      //   a.download = `${invoiceNumber}.pdf`;
-      //   document.body.appendChild(a);
-      //   a.click();
-      //   window.URL.revokeObjectURL(url);
-      //   document.body.removeChild(a);
-      // }
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Factura_${invoiceNumber}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } else {
+        const data = await response.json();
+        setError(data.message || 'Eroare la descărcarea facturii');
+      }
     } catch (err) {
       console.error('Error downloading invoice:', err);
       setError('Eroare la descărcarea facturii');

@@ -217,7 +217,7 @@
       "Step 4: Verify PDF file downloads",
       "Step 5: Verify PDF contains correct invoice data"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
